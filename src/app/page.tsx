@@ -24,7 +24,14 @@ export default function Home() {
   }, []);
 
   const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({ provider: "google" });
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: typeof window !== "undefined"
+          ? window.location.origin
+          : "https://finiq-gamma.vercel.app"
+      }
+    });
   };
 
   const handleLogout = async () => {
