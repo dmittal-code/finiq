@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
 import NavBar from "./NavBar";
 
 const geistSans = Geist({
@@ -13,17 +12,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/terms", label: "Terms" },
-  { href: "/quizzes", label: "Quizzes" },
-  { href: "/flashcards", label: "Flashcards" },
-  { href: "/compound-interest", label: "Compound Interest" },
-  { href: "/risk-vs-reward", label: "Risk vs Reward" },
-  { href: "/investments", label: "Investments" },
-  { href: "/savings-goal", label: "Savings Goal" },
-];
 
 export const metadata: Metadata = {
   title: "Create Next App",

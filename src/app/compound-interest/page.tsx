@@ -5,7 +5,7 @@ function calculateCompoundInterest(P: number, PMT: number, r: number, n: number,
   // P = initial principal, PMT = monthly deposit, r = annual rate (decimal), n = compounds/year, t = years
   let values = [];
   let total = P;
-  let yearlyTotals = [P];
+  const yearlyTotals = [P];
   for (let year = 1; year <= t; year++) {
     for (let month = 1; month <= 12; month++) {
       total = total * (1 + r / n) + PMT;

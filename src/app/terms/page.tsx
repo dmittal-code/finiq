@@ -1,15 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
-
-type FinanceTerm = {
-  id: string;
-  term: string;
-  definition: string;
-  created_at: string;
-};
-
 export default function TermsPage() {
   return (
     <div className="p-8 text-center">

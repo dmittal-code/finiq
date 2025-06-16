@@ -85,7 +85,7 @@ export default function RiskVsRewardPage() {
               <ul className="space-y-2 w-full">
                 {dropState[risk].map(id => {
                   const s = scenarios.find(x => x.id === id)!;
-                  let correct = showResult ? (s.risk === risk) : null;
+                  const correct = showResult ? (s.risk === risk) : null;
                   return (
                     <li
                       key={id}

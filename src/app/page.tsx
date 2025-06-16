@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
-import type { User } from "@supabase/supabase-js";
 import Link from "next/link";
 
 const modules = [
@@ -16,39 +13,6 @@ const modules = [
 ];
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data?.user ?? null);
-      setLoading(false);
-    };
-    getUser();
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: typeof window !== "undefined"
-          ? window.location.origin
-          : "https://finiq-gamma.vercel.app"
-      }
-    });
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-100 to-blue-100 p-6">
       <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-green-800 text-center drop-shadow">FinIQ Lite – Teen Financial Literacy</h1>
