@@ -3,7 +3,6 @@ import { useState } from "react";
 
 function calculateCompoundInterest(P: number, PMT: number, r: number, n: number, t: number) {
   // P = initial principal, PMT = monthly deposit, r = annual rate (decimal), n = compounds/year, t = years
-  let values = [];
   let total = P;
   const yearlyTotals = [P];
   for (let year = 1; year <= t; year++) {

@@ -11,6 +11,7 @@ You are helping me build "FinIQ Lite," a Next.js 14 + Tailwind CSS web app for I
 ## App structure
 - Each module is its own page/component under `src/app/`
 - Top-level navigation bar (in `NavBar.tsx`, a client component) is present on every page, with right-aligned, visually appealing links to all modules and the homepage. The active page is highlighted.
+- All modules are now scaffolded and accessible from the navigation bar.
 
 ## Modules/pages
 - `/` (Home): Colorful landing page with links to all modules.
@@ -29,9 +30,15 @@ You are helping me build "FinIQ Lite," a Next.js 14 + Tailwind CSS web app for I
 - Supabase is set up for data (and optionally auth).
 - `.env.local` is used for Supabase keys.
 
+## Linting and Build Notes
+- The project uses strict TypeScript/ESLint settings.
+- **Vercel builds will fail if there are unused variables or imports, or if `let` is used instead of `const` for variables that are never reassigned.**
+- Always remove unused variables/imports and prefer `const` for variables that are not reassigned.
+
 ## Recent fixes
 - Navigation bar is a client component for active link highlighting.
 - All `usePathname` imports removed from server components.
+- All unused variables/imports removed and `let` replaced with `const` where appropriate to ensure Vercel build passes.
 
 ## How I want to work
 - I want to build and improve each module incrementally. Please always use best practices for Next.js and Tailwind, and keep the UI fun and accessible for teens.
