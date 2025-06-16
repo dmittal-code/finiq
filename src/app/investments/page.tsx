@@ -272,7 +272,7 @@ export default function InvestmentsPage() {
             <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
               <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Risk vs. Return Spectrum</h3>
               <div className="relative h-64 bg-gradient-to-r from-green-100 via-yellow-100 to-red-100 rounded-lg p-4">
-                {investmentTypes.map((investment, index) => {
+                {investmentTypes.map((investment) => {
                   const x = investment.riskLevel === 'Low' ? 10 : investment.riskLevel === 'Medium' ? 50 : 90;
                   const y = investment.potentialReturn === 'Low' ? 80 : investment.potentialReturn === 'Medium' ? 50 : 20;
                   

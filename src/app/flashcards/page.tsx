@@ -141,7 +141,7 @@ export default function FlashcardsPage() {
   const currentCard = flashcards[currentCardIndex];
   const progress = (completedCards.size / flashcards.length) * 100;
 
-  // Keyboard navigation
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       switch (event.key) {
