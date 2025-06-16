@@ -123,7 +123,7 @@ export default function RiskVsRewardPage() {
           <h2 className="text-lg font-bold mb-2">Results</h2>
           <ul className="space-y-1">
             {scenarios.map(s => {
-              const assigned = Object.entries(dropState).find(([risk, ids]) => ids.includes(s.id));
+              const assigned = Object.entries(dropState).find((entry) => entry[1].includes(s.id));
               const correct = assigned && assigned[0] === s.risk;
               return (
                 <li key={s.id} className={correct ? "text-green-700" : "text-red-700"}>
