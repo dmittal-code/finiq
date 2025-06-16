@@ -3,6 +3,17 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import type { User } from "@supabase/supabase-js";
+import Link from "next/link";
+
+const modules = [
+  { href: "/terms", label: "📚 Basic Financial Terms" },
+  { href: "/quizzes", label: "📝 Quizzes" },
+  { href: "/flashcards", label: "🃏 Flashcards" },
+  { href: "/compound-interest", label: "📈 Compound Interest Simulator" },
+  { href: "/risk-vs-reward", label: "🎲 Risk vs Reward" },
+  { href: "/investments", label: "💸 Types of Investments" },
+  { href: "/savings-goal", label: "🎯 Savings Goal Calculator" },
+];
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
@@ -39,30 +50,21 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-8 flex flex-col items-center gap-6">
-        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100">Hello World</h1>
-        {loading ? (
-          <div className="text-gray-500">Loading...</div>
-        ) : user ? (
-          <>
-            <div className="text-lg text-gray-800 dark:text-gray-200 mb-2">Logged in as <span className="font-mono">{user.email}</span></div>
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={handleLogin}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-100 to-blue-100 p-6">
+      <h1 className="text-3xl sm:text-4xl font-extrabold mb-6 text-green-800 text-center drop-shadow">FinIQ Lite – Teen Financial Literacy</h1>
+      <p className="mb-8 text-lg text-gray-700 text-center max-w-xl">Empowering Indian teens (grades 10–12) to master money skills with fun, interactive modules. Start your journey below!</p>
+      <div className="w-full max-w-md grid gap-4">
+        {modules.map((mod) => (
+          <Link
+            key={mod.href}
+            href={mod.href}
+            className="block bg-white rounded-lg shadow hover:shadow-lg transition px-6 py-4 text-lg font-semibold flex items-center gap-3 border border-green-200 hover:bg-green-50"
           >
-            Login with Google
-          </button>
-        )}
+            {mod.label}
+          </Link>
+        ))}
       </div>
+      <footer className="mt-12 text-gray-400 text-xs text-center">Made for Indian teens • FinIQ Lite</footer>
     </div>
   );
 }
