@@ -98,135 +98,172 @@ export default function FlashcardsPageClient() {
   }, [currentCardIndex, isFlipped, handleNext, handleFlip]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+        <div className="text-center mb-16 animate-fade-in">
+          <h1 className="text-heading-1 font-bold text-gray-900 mb-6">
             Financial Literacy Flashcards
           </h1>
-          <p className="text-gray-600 mb-4">
+          <p className="text-body-large text-gray-600 leading-relaxed mb-8">
             Master 20 essential financial concepts through interactive flashcards
           </p>
           {/* Progress Bar */}
           <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
             <div 
-              className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 shadow-sm"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>Progress: {completedCards.size}/{flashcards.length} completed</span>
-            <span>{Math.round(progress)}%</span>
+          <div className="flex justify-between text-body-small text-gray-600">
+            <span>Progress: <span className="font-semibold text-blue-600">{completedCards.size}</span>/{flashcards.length} completed</span>
+            <span className="font-semibold text-gray-800">{Math.round(progress)}%</span>
           </div>
         </div>
+
         {/* Flashcard */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-12">
           <div 
-            className="w-full max-w-md h-64 cursor-pointer perspective-1000"
+            className="w-full max-w-lg h-80 cursor-pointer perspective-1000"
             onClick={handleFlip}
           >
             <div className={`relative w-full h-full transition-transform duration-500 transform-style-preserve-3d ${
               isFlipped ? 'rotate-y-180' : ''
             }`}>
               {/* Front of card */}
-              <div className="absolute w-full h-full bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center border-2 border-gray-200 backface-hidden">
-                <div className="text-sm text-blue-600 font-medium mb-2">
+              <div className="absolute w-full h-full card p-8 flex flex-col justify-center items-center backface-hidden animate-scale-in">
+                <div className="text-body-small text-blue-600 font-semibold mb-4 px-3 py-1 bg-blue-50 rounded-full">
                   {currentCard.category}
                 </div>
-                <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center mb-4">
+                <h2 className="text-heading-1 font-bold text-gray-900 text-center mb-6 leading-tight">
                   {currentCard.term}
                 </h2>
-                <div className="text-sm text-gray-500 text-center">
-                  Tap to see definition
+                <div className="text-body text-gray-500 text-center mb-6">
+                  💡 Tap to see definition
                 </div>
-                <div className="mt-4 text-xs text-gray-400">
-                  Card {currentCardIndex + 1} of {flashcards.length}
+                <div className="text-body-small text-gray-400">
+                  Card <span className="font-semibold text-blue-600">{currentCardIndex + 1}</span> of <span className="font-semibold text-gray-600">{flashcards.length}</span>
                 </div>
               </div>
               {/* Back of card */}
-              <div className="absolute w-full h-full bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center border-2 border-green-400 backface-hidden rotate-y-180">
-                <div className="text-sm text-blue-100 font-medium mb-2">
+              <div className="absolute w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center backface-hidden rotate-y-180 border border-blue-200">
+                <div className="text-body-small text-blue-100 font-semibold mb-4 px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm">
                   {currentCard.category}
                 </div>
-                <p className="text-white text-center leading-relaxed">
+                <p className="text-white text-center leading-relaxed text-body-large mb-6">
                   {currentCard.definition}
                 </p>
-                <div className="mt-4 text-xs text-blue-200">
-                  Card {currentCardIndex + 1} of {flashcards.length}
+                <div className="text-body-small text-blue-200">
+                  Card <span className="font-semibold text-white">{currentCardIndex + 1}</span> of <span className="font-semibold text-blue-100">{flashcards.length}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         {/* Controls */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           <button
             onClick={handlePrevious}
-            className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+            className="btn-secondary"
           >
             ← Previous
           </button>
           <button
             onClick={handleFlip}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="btn-primary text-lg px-8"
           >
-            {isFlipped ? 'Show Term' : 'Show Definition'}
+            {isFlipped ? '🔄 Show Term' : '💡 Show Definition'}
           </button>
           <button
             onClick={handleNext}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="btn-secondary"
           >
-            Next Card
+            Next Card →
           </button>
         </div>
+
         {/* Additional Controls */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           <button
             onClick={handleShuffle}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="btn-accent"
           >
-            Shuffle
+            🔀 Shuffle
           </button>
           <button
             onClick={handleReset}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="btn-accent"
           >
-            Reset Progress
+            🔄 Reset Progress
           </button>
           <button
             onClick={() => setShowProgress(!showProgress)}
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+            className="btn-accent"
           >
-            {showProgress ? 'Hide Progress' : 'Show Progress'}
+            {showProgress ? '📊 Hide Progress' : '📈 Show Progress'}
           </button>
         </div>
+
         {/* Progress Details */}
         {showProgress && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Progress Details</h3>
+          <div className="card p-8 mb-12 animate-slide-in-left">
+            <h3 className="text-heading-2 font-bold text-gray-900 mb-8">Progress Details</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {flashcards.map((card) => (
                 <div
                   key={card.id}
-                  className={`p-3 rounded-lg text-center text-sm ${
+                  className={`p-4 rounded-xl text-center transition-all duration-300 ${
                     completedCards.has(card.id)
-                      ? 'bg-green-100 text-green-800 border border-green-300'
-                      : 'bg-gray-100 text-gray-600 border border-gray-300'
+                      ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 border-2 border-green-300 shadow-sm'
+                      : 'bg-gray-50 text-gray-600 border-2 border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <div className="font-medium">{card.term}</div>
-                  <div className="text-xs mt-1">{card.category}</div>
+                  <div className="font-semibold text-body-small mb-1">{card.term}</div>
+                  <div className="text-xs text-gray-500">{card.category}</div>
+                  {completedCards.has(card.id) && (
+                    <div className="text-green-600 mt-2">✓</div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
+
+        {/* Features */}
+        <div className="card p-10 animate-fade-in">
+          <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Flashcard Features</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <span className="text-2xl">🃏</span>
+              </div>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Interactive Cards</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Flip cards to reveal definitions and test your knowledge</p>
+            </div>
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <span className="text-2xl">📊</span>
+              </div>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Progress Tracking</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Track which terms you've mastered and monitor your progress</p>
+            </div>
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <span className="text-2xl">⌨️</span>
+              </div>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Keyboard Shortcuts</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Use arrow keys to navigate and spacebar to flip cards</p>
+            </div>
+          </div>
+        </div>
+
         {/* Keyboard Shortcuts */}
-        <div className="text-center text-sm text-gray-500">
-          <p>💡 Tip: Use arrow keys to navigate, spacebar to flip cards, Ctrl+R to reset</p>
+        <div className="text-center text-body-small text-gray-500 mt-8">
+          <p>💡 <strong>Tip:</strong> Use arrow keys to navigate, spacebar to flip cards, Ctrl+R to reset</p>
         </div>
       </div>
+
       <style jsx>{`
         .perspective-1000 {
           perspective: 1000px;

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Login',
-  description: 'Sign in to FinIQ Lite to access financial learning modules.'
+  title: 'FinIQ | Login',
+  description: 'Sign in to FinIQ to access financial learning modules.'
 };
 
 import LoginPageClient from './LoginPageClient';

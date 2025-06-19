@@ -1,6 +1,6 @@
-# FinIQ Lite – Project Context
+# FinIQ – Project Context
 
-You are helping me build "FinIQ Lite," a Next.js 14 + Tailwind CSS web app for Indian high-school students (grades 10–12) to learn financial literacy. The app is mobile-first, fun, and interactive, with a focus on Indian context (pocket money, college fees, etc.).
+You are helping me build "FinIQ," a Next.js 14 + Tailwind CSS web app for Indian high-school students (grades 10–12) to learn financial literacy. The app is mobile-first, fun, and interactive, with a focus on Indian context (pocket money, college fees, etc.).
 
 ## Tech stack
 - Next.js (App Router, TypeScript)

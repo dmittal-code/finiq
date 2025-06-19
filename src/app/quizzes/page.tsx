@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Quizzes',
-  description: 'Test your financial knowledge with interactive quizzes on FinIQ Lite.'
+  title: 'FinIQ | Quizzes',
+  description: 'Test your financial knowledge with interactive quizzes on FinIQ.'
 };
 
 import QuizzesPageClient from './QuizzesPageClient';

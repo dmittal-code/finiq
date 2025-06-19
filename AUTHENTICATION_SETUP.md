@@ -1,6 +1,6 @@
 # Authentication Setup Guide
 
-This guide will help you set up Google SSO authentication and admin controls for your FinIQ Lite application.
+This guide will help you set up Google SSO authentication and admin controls for your FinIQ application.
 
 ## 🔐 Authentication Overview
 
@@ -22,12 +22,12 @@ The application now requires users to sign in with Google to access all features
 4. Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client IDs"
 5. Configure the OAuth consent screen:
    - User Type: External
-   - App name: FinIQ Lite
+   - App name: FinIQ
    - User support email: Your email
    - Developer contact information: Your email
 6. Create OAuth 2.0 Client ID:
    - Application type: Web application
-   - Name: FinIQ Lite Web Client
+   - Name: FinIQ Web Client
    - Authorized JavaScript origins: `http://localhost:3000` (for development)
    - Authorized redirect URIs: `http://localhost:3000/auth/callback` (for development)
 7. Copy the Client ID and Client Secret

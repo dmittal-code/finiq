@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Authenticating...',
-  description: 'Completing sign in to FinIQ Lite.'
+  title: 'FinIQ | Authenticating...',
+  description: 'Completing sign in to FinIQ.'
 };
 
 import AuthCallbackPageClient from './AuthCallbackPageClient';

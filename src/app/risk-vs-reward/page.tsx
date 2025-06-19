@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Risk vs Reward',
-  description: 'Understand the relationship between risk and reward in investing on FinIQ Lite.'
+  title: 'FinIQ | Risk vs Reward',
+  description: 'Understand the relationship between risk and reward in investing on FinIQ.'
 };
 
 import RiskVsRewardPageClient from './RiskVsRewardPageClient';

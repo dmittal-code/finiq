@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FinIQ Lite - Teen Financial Literacy",
+  title: "FinIQ - Teen Financial Literacy",
   description: "Empowering Indian teens with financial literacy through interactive learning modules, quizzes, and tools.",
   keywords: "financial literacy, teen education, Indian students, investments, savings, money management",
 };

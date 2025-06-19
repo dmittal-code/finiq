@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Admin - Terms',
-  description: 'Admin dashboard for managing financial terms in FinIQ Lite.'
+  title: 'FinIQ | Admin - Terms',
+  description: 'Admin dashboard for managing financial terms in FinIQ.'
 };
 
 import AdminTermsPageClient from './AdminTermsPageClient';

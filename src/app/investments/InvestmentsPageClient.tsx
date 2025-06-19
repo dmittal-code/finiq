@@ -172,14 +172,14 @@ export default function InvestmentsPageClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-16 animate-fade-in">
+          <h1 className="text-heading-1 font-bold text-gray-900 mb-6">
             Investment Types Explorer
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-body-large text-gray-600 leading-relaxed mb-8">
             Learn about different investment options and build your ideal portfolio
           </p>
           
@@ -187,23 +187,23 @@ export default function InvestmentsPageClient() {
           <div className="flex justify-center gap-4 mb-8">
             <button
               onClick={() => setShowPortfolioBuilder(false)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
                 !showPortfolioBuilder
-                  ? 'bg-green-500 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
+                  ? 'btn-primary'
+                  : 'btn-secondary'
               }`}
             >
               📊 Investment Types
             </button>
             <button
               onClick={() => setShowPortfolioBuilder(true)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+              className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
                 showPortfolioBuilder
-                  ? 'bg-green-500 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
+                  ? 'btn-primary'
+                  : 'btn-secondary'
               }`}
             >
-              �� Portfolio Builder
+              💼 Portfolio Builder
             </button>
           </div>
         </div>
@@ -212,55 +212,56 @@ export default function InvestmentsPageClient() {
           /* Investment Types Explorer */
           <div>
             {/* Investment Cards Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {investmentTypes.map((investment) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {investmentTypes.map((investment, index) => (
                 <div
                   key={investment.id}
                   onClick={() => handleInvestmentClick(investment)}
-                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-green-200 group"
+                  className="card p-8 hover:shadow-xl transition-all duration-300 cursor-pointer group animate-scale-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {/* Header */}
-                  <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-4 mb-6">
                     <div className="text-4xl">{investment.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
+                      <h3 className="text-heading-2 font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                         {investment.name}
                       </h3>
-                      <p className="text-sm text-gray-500">{investment.minimumInvestment} min</p>
+                      <p className="text-body-small text-gray-500">{investment.minimumInvestment} min</p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-body text-gray-600 leading-relaxed mb-6 line-clamp-3">
                     {investment.description}
                   </p>
 
                   {/* Risk-Reward Indicators */}
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Risk:</span>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${riskLevels[investment.riskLevel].color}`}>
+                      <span className="text-body-small text-gray-500">Risk:</span>
+                      <span className={`px-3 py-1 text-body-small font-semibold rounded-full ${riskLevels[investment.riskLevel].color}`}>
                         {investment.riskLevel}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Return:</span>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${riskLevels[investment.potentialReturn].color}`}>
+                      <span className="text-body-small text-gray-500">Return:</span>
+                      <span className={`px-3 py-1 text-body-small font-semibold rounded-full ${riskLevels[investment.potentialReturn].color}`}>
                         {investment.potentialReturn}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-500">Liquidity:</span>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${riskLevels[investment.liquidity].color}`}>
+                      <span className="text-body-small text-gray-500">Liquidity:</span>
+                      <span className={`px-3 py-1 text-body-small font-semibold rounded-full ${riskLevels[investment.liquidity].color}`}>
                         {investment.liquidity}
                       </span>
                     </div>
                   </div>
 
                   {/* Action Button */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-green-600 text-sm font-medium">Learn more</span>
-                    <svg className="w-4 h-4 text-green-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-blue-600 text-body font-semibold">Learn more</span>
+                    <svg className="w-5 h-5 text-blue-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -269,12 +270,12 @@ export default function InvestmentsPageClient() {
             </div>
 
             {/* Risk-Reward Chart */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Risk vs. Return Spectrum</h3>
-              <div className="relative h-64 bg-gradient-to-r from-green-100 via-yellow-100 to-red-100 rounded-lg p-4">
+            <div className="card p-10 mb-16 animate-fade-in">
+              <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Risk vs. Return Spectrum</h3>
+              <div className="relative h-80 bg-gradient-to-r from-green-100 via-yellow-100 to-red-100 rounded-2xl p-6">
                 {investmentTypes.map((investment) => {
-                  const x = investment.riskLevel === 'Low' ? 10 : investment.riskLevel === 'Medium' ? 50 : 90;
-                  const y = investment.potentialReturn === 'Low' ? 80 : investment.potentialReturn === 'Medium' ? 50 : 20;
+                  const x = investment.riskLevel === 'Low' ? 15 : investment.riskLevel === 'Medium' ? 50 : 85;
+                  const y = investment.potentialReturn === 'Low' ? 75 : investment.potentialReturn === 'Medium' ? 50 : 25;
                   
                   return (
                     <div
@@ -283,10 +284,10 @@ export default function InvestmentsPageClient() {
                       style={{ left: `${x}%`, top: `${y}%` }}
                       onClick={() => handleInvestmentClick(investment)}
                     >
-                      <div className="bg-white rounded-full p-2 shadow-lg border-2 border-green-200 hover:border-green-400">
-                        <span className="text-lg">{investment.icon}</span>
+                      <div className="bg-white rounded-full p-3 shadow-lg border-2 border-blue-200 hover:border-blue-400">
+                        <span className="text-2xl">{investment.icon}</span>
                       </div>
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white px-2 py-1 rounded text-xs font-medium shadow-lg whitespace-nowrap">
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-white px-3 py-2 rounded-lg text-body-small font-semibold shadow-lg whitespace-nowrap">
                         {investment.name}
                       </div>
                     </div>
@@ -294,10 +295,10 @@ export default function InvestmentsPageClient() {
                 })}
                 
                 {/* Axis Labels */}
-                <div className="absolute bottom-2 left-2 text-xs text-gray-600">Low Risk</div>
-                <div className="absolute bottom-2 right-2 text-xs text-gray-600">High Risk</div>
-                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">High Return</div>
-                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Low Return</div>
+                <div className="absolute bottom-4 left-4 text-body-small text-gray-600 font-semibold">Low Risk</div>
+                <div className="absolute bottom-4 right-4 text-body-small text-gray-600 font-semibold">High Risk</div>
+                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-body-small text-gray-600 font-semibold">High Return</div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-body-small text-gray-600 font-semibold">Low Return</div>
               </div>
             </div>
           </div>
@@ -306,35 +307,35 @@ export default function InvestmentsPageClient() {
           <div>
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Portfolio Builder */}
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">Build Your Portfolio</h3>
+              <div className="card p-8 animate-scale-in">
+                <h3 className="text-heading-2 font-bold text-gray-900 mb-8">Build Your Portfolio</h3>
                 
                 {/* Total Amount Input */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="mb-8">
+                  <label className="block text-body font-semibold text-gray-700 mb-3">
                     Total Investment Amount
                   </label>
                   <input
                     type="number"
                     value={totalAmount}
                     onChange={(e) => setTotalAmount(Number(e.target.value))}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
+                    className="input-enhanced"
                     placeholder="Enter amount"
                   />
                 </div>
 
                 {/* Investment Selection */}
-                <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-gray-800 mb-4">Add Investments</h4>
+                <div className="mb-8">
+                  <h4 className="text-heading-3 font-semibold text-gray-900 mb-6">Add Investments</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {investmentTypes.map((investment) => (
                       <button
                         key={investment.id}
                         onClick={() => addToPortfolio(investment)}
-                        className="flex items-center gap-2 p-3 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors"
+                        className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-300"
                       >
-                        <span className="text-lg">{investment.icon}</span>
-                        <span className="text-sm font-medium">{investment.name}</span>
+                        <span className="text-xl">{investment.icon}</span>
+                        <span className="text-body font-semibold">{investment.name}</span>
                       </button>
                     ))}
                   </div>
@@ -343,16 +344,16 @@ export default function InvestmentsPageClient() {
                 {/* Portfolio Items */}
                 {portfolioItems.length > 0 && (
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4">Your Portfolio</h4>
+                    <h4 className="text-heading-3 font-semibold text-gray-900 mb-6">Your Portfolio</h4>
                     <div className="space-y-4">
                       {portfolioItems.map((item) => (
-                        <div key={item.type} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
+                        <div key={item.type} className="flex items-center gap-4 p-6 border-2 border-gray-200 rounded-xl">
                           <div className="flex-1">
-                            <div className="flex justify-between items-center mb-2">
-                              <span className="font-medium">{item.type}</span>
+                            <div className="flex justify-between items-center mb-3">
+                              <span className="text-body font-semibold">{item.type}</span>
                               <button
                                 onClick={() => removeFromPortfolio(item.type)}
-                                className="text-red-500 hover:text-red-700"
+                                className="text-red-500 hover:text-red-700 p-1"
                               >
                                 ✕
                               </button>
@@ -363,11 +364,11 @@ export default function InvestmentsPageClient() {
                               max="100"
                               value={item.percentage}
                               onChange={(e) => updatePortfolioPercentage(item.type, Number(e.target.value))}
-                              className="w-full"
+                              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                             />
-                            <div className="flex justify-between text-sm text-gray-600 mt-1">
-                              <span>{item.percentage}%</span>
-                              <span>₹{item.amount.toLocaleString()}</span>
+                            <div className="flex justify-between text-body-small text-gray-600 mt-2">
+                              <span className="font-semibold">{item.percentage}%</span>
+                              <span className="font-semibold">₹{item.amount.toLocaleString()}</span>
                             </div>
                           </div>
                         </div>
@@ -378,80 +379,46 @@ export default function InvestmentsPageClient() {
               </div>
 
               {/* Portfolio Visualization */}
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">Portfolio Overview</h3>
+              <div className="card p-8 animate-slide-in-right">
+                <h3 className="text-heading-2 font-bold text-gray-900 mb-8">Portfolio Overview</h3>
                 
                 {portfolioItems.length === 0 ? (
-                  <div className="text-center py-12">
-                    <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                      <span className="text-3xl">📊</span>
+                  <div className="text-center py-16">
+                    <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+                      <span className="text-4xl">📊</span>
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">No investments yet</h4>
-                    <p className="text-gray-600">Add investments from the left panel to build your portfolio</p>
+                    <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">No investments yet</h4>
+                    <p className="text-body text-gray-600">Add investments from the left panel to build your portfolio</p>
                   </div>
                 ) : (
                   <div>
-                    {/* Pie Chart */}
-                    <div className="mb-6">
-                      <h4 className="text-lg font-semibold text-gray-800 mb-4">Asset Allocation</h4>
-                      <div className="relative w-48 h-48 mx-auto">
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                          {portfolioItems.map((item, index) => {
-                            const investment = investmentTypes.find(inv => inv.name === item.type);
-                            const color = investment ? investment.color.split(' ')[1] : 'gray';
-                            const startAngle = portfolioItems.slice(0, index).reduce((sum, prevItem) => sum + prevItem.percentage, 0);
-                            const endAngle = startAngle + item.percentage;
-                            const startRad = (startAngle * 360) / 100 * (Math.PI / 180);
-                            const endRad = (endAngle * 360) / 100 * (Math.PI / 180);
-                            
-                            const x1 = 50 + 40 * Math.cos(startRad);
-                            const y1 = 50 + 40 * Math.sin(startRad);
-                            const x2 = 50 + 40 * Math.cos(endRad);
-                            const y2 = 50 + 40 * Math.sin(endRad);
-                            
-                            const largeArcFlag = item.percentage > 50 ? 1 : 0;
-                            
-                            return (
-                              <path
-                                key={item.type}
-                                d={`M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2} Z`}
-                                fill={`url(#${color})`}
-                                stroke="white"
-                                strokeWidth="2"
-                              />
-                            );
-                          })}
-                        </svg>
-                      </div>
-                    </div>
-
                     {/* Portfolio Stats */}
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                        <span className="font-medium">Total Allocation:</span>
-                        <span className={`font-bold ${getTotalPercentage() > 100 ? 'text-red-600' : 'text-green-600'}`}>
+                    <div className="space-y-4 mb-8">
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                        <span className="text-body font-semibold">Total Allocation:</span>
+                        <span className={`text-body-large font-bold ${getTotalPercentage() > 100 ? 'text-red-600' : 'text-green-600'}`}>
                           {getTotalPercentage()}%
                         </span>
                       </div>
                       
-                      <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                        <span className="font-medium">Portfolio Risk:</span>
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${riskLevels[getPortfolioRisk()].color}`}>
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+                        <span className="text-body font-semibold">Portfolio Risk:</span>
+                        <span className={`px-3 py-1 rounded-full text-body-small font-semibold ${riskLevels[getPortfolioRisk()].color}`}>
                           {getPortfolioRisk()}
                         </span>
                       </div>
                       
-                      <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                        <span className="font-medium">Total Value:</span>
-                        <span className="font-bold text-lg">₹{totalAmount.toLocaleString()}</span>
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
+                        <span className="text-body font-semibold">Total Value:</span>
+                        <span className="text-body-large font-bold text-orange-600">₹{totalAmount.toLocaleString()}</span>
                       </div>
                     </div>
 
                     {/* Recommendations */}
                     {getTotalPercentage() !== 100 && (
-                      <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                        <h5 className="font-semibold text-yellow-800 mb-2">💡 Tip</h5>
-                        <p className="text-yellow-700 text-sm">
+                      <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl">
+                        <h5 className="text-body font-bold text-yellow-800 mb-2">💡 Tip</h5>
+                        <p className="text-yellow-700 text-body-small">
                           {getTotalPercentage() < 100 
                             ? `You have ${100 - getTotalPercentage()}% unallocated. Consider adding more investments.`
                             : 'You have over 100% allocated. Reduce some percentages to balance your portfolio.'
@@ -469,15 +436,15 @@ export default function InvestmentsPageClient() {
         {/* Investment Modal */}
         {selectedInvestment && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="p-8">
                 {/* Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className="text-4xl">{selectedInvestment.icon}</div>
+                <div className="flex items-start justify-between mb-8">
+                  <div className="flex items-center gap-6">
+                    <div className="text-5xl">{selectedInvestment.icon}</div>
                     <div>
-                      <h2 className="text-3xl font-bold text-gray-800 mb-2">{selectedInvestment.name}</h2>
-                      <p className="text-gray-600">{selectedInvestment.description}</p>
+                      <h2 className="text-heading-1 font-bold text-gray-900 mb-3">{selectedInvestment.name}</h2>
+                      <p className="text-body-large text-gray-600">{selectedInvestment.description}</p>
                     </div>
                   </div>
                   <button
@@ -491,76 +458,76 @@ export default function InvestmentsPageClient() {
                 </div>
 
                 {/* Key Metrics */}
-                <div className="grid md:grid-cols-3 gap-4 mb-6">
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-2">Risk Level</h4>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${riskLevels[selectedInvestment.riskLevel].color}`}>
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                    <h4 className="text-body font-bold text-gray-900 mb-3">Risk Level</h4>
+                    <span className={`px-4 py-2 rounded-full text-body font-semibold ${riskLevels[selectedInvestment.riskLevel].color}`}>
                       {selectedInvestment.riskLevel}
                     </span>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-2">Potential Return</h4>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${riskLevels[selectedInvestment.potentialReturn].color}`}>
+                  <div className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+                    <h4 className="text-body font-bold text-gray-900 mb-3">Potential Return</h4>
+                    <span className={`px-4 py-2 rounded-full text-body font-semibold ${riskLevels[selectedInvestment.potentialReturn].color}`}>
                       {selectedInvestment.potentialReturn}
                     </span>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-2">Liquidity</h4>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${riskLevels[selectedInvestment.liquidity].color}`}>
+                  <div className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
+                    <h4 className="text-body font-bold text-gray-900 mb-3">Liquidity</h4>
+                    <span className={`px-4 py-2 rounded-full text-body font-semibold ${riskLevels[selectedInvestment.liquidity].color}`}>
                       {selectedInvestment.liquidity}
                     </span>
                   </div>
                 </div>
 
                 {/* Pros and Cons */}
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-3 text-green-600">✅ Pros</h4>
-                    <ul className="space-y-2">
+                    <h4 className="text-heading-3 font-bold text-gray-900 mb-4">✅ Advantages</h4>
+                    <ul className="space-y-3">
                       {selectedInvestment.pros.map((pro, index) => (
-                        <li key={index} className="flex items-start gap-2">
+                        <li key={index} className="flex items-start gap-3">
                           <span className="text-green-500 mt-1">•</span>
-                          <span className="text-gray-700">{pro}</span>
+                          <span className="text-body text-gray-700">{pro}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-3 text-red-600">❌ Cons</h4>
-                    <ul className="space-y-2">
+                    <h4 className="text-heading-3 font-bold text-gray-900 mb-4">⚠️ Disadvantages</h4>
+                    <ul className="space-y-3">
                       {selectedInvestment.cons.map((con, index) => (
-                        <li key={index} className="flex items-start gap-2">
+                        <li key={index} className="flex items-start gap-3">
                           <span className="text-red-500 mt-1">•</span>
-                          <span className="text-gray-700">{con}</span>
+                          <span className="text-body text-gray-700">{con}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                {/* Example */}
-                <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Example</h4>
-                  <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
-                    <p className="text-gray-700 italic">{selectedInvestment.example}</p>
+                {/* Example and Minimum Investment */}
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                  <div className="p-6 bg-gray-50 rounded-xl">
+                    <h4 className="text-heading-3 font-bold text-gray-900 mb-3">💡 Example</h4>
+                    <p className="text-body text-gray-700">{selectedInvestment.example}</p>
+                  </div>
+                  <div className="p-6 bg-gray-50 rounded-xl">
+                    <h4 className="text-heading-3 font-bold text-gray-900 mb-3">💰 Minimum Investment</h4>
+                    <p className="text-body text-gray-700">{selectedInvestment.minimumInvestment}</p>
                   </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
+                <div className="flex justify-center gap-4">
                   <button
-                    onClick={() => {
-                      addToPortfolio(selectedInvestment);
-                      setShowPortfolioBuilder(true);
-                      closeModal();
-                    }}
-                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    onClick={() => addToPortfolio(selectedInvestment)}
+                    className="btn-primary px-8 py-3"
                   >
-                    Add to Portfolio
+                    📊 Add to Portfolio
                   </button>
                   <button
                     onClick={closeModal}
-                    className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                    className="btn-secondary px-8 py-3"
                   >
                     Close
                   </button>

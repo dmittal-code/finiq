@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Savings Goal',
-  description: 'Set and track your savings goals with FinIQ Lite.'
+  title: 'FinIQ | Savings Goal',
+  description: 'Set and track your savings goals with FinIQ.'
 };
 
 import SavingsGoalPageClient from './SavingsGoalPageClient';

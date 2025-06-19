@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Terms',
-  description: 'Browse and learn financial terms in the FinIQ Lite glossary.'
+  title: 'FinIQ | Terms',
+  description: 'Browse and learn financial terms in the FinIQ glossary.'
 };
 
 import TermsPageClient from './TermsPageClient';

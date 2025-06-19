@@ -67,7 +67,7 @@ export default function AddTermPageClient() {
               Add New Financial Term
             </h1>
             <p className="text-xl text-gray-600">
-              Add a new term to the FinIQ Lite glossary
+              Add a new term to the FinIQ glossary
             </p>
           </div>
 

@@ -96,7 +96,7 @@ export default function Home() {
       <div className="py-20 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
-            <h3 className="text-heading-1 font-bold text-gray-900 mb-6">Why Choose FinIQ Lite?</h3>
+            <h3 className="text-heading-1 font-bold text-gray-900 mb-6">Why Choose FinIQ?</h3>
             <p className="text-body-large text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Our platform is specifically designed to help Indian teens build a strong foundation in financial literacy
             </p>
@@ -196,7 +196,7 @@ export default function Home() {
             <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mb-4">
               <span className="text-lg">💰</span>
             </div>
-            <h4 className="text-heading-3 font-bold text-white mb-2">FinIQ Lite</h4>
+                          <h4 className="text-heading-3 font-bold text-white mb-2">FinIQ</h4>
           </div>
           <p className="text-body text-gray-400 mb-4 leading-relaxed">
             Made with ❤️ for Indian teens • Empowering the next generation of financially literate individuals

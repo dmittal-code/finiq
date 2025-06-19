@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Admin - Edit Term',
-  description: 'Edit a financial term in the FinIQ Lite glossary (admin only).'
+  title: 'FinIQ | Admin - Edit Term',
+  description: 'Edit a financial term in the FinIQ glossary (admin only).'
 };
 
 import EditTermPageClient from './EditTermPageClient';

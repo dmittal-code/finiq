@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'FinIQ Lite | Investments',
-  description: 'Explore investment options and strategies for Indian teens on FinIQ Lite.'
+  title: 'FinIQ | Investments',
+  description: 'Explore investment options and strategies for Indian teens on FinIQ.'
 };
 
 import InvestmentsPageClient from './InvestmentsPageClient';
