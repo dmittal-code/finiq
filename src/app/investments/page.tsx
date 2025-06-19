@@ -572,4 +572,9 @@ export default function InvestmentsPage() {
       </div>
     </div>
   );
-} 
+}
+
+export const metadata = {
+  title: 'FinIQ Lite | Investments',
+  description: 'Explore investment options and strategies for Indian teens on FinIQ Lite.'
+}; 

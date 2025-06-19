@@ -357,4 +357,9 @@ export default function FlashcardsPage() {
       `}</style>
     </div>
   );
-} 
+}
+
+export const metadata = {
+  title: 'FinIQ Lite | Flashcards',
+  description: 'Practice and memorize financial concepts with flashcards on FinIQ Lite.'
+}; 

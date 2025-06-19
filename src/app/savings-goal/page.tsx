@@ -1,6 +1,11 @@
 "use client";
 import { useState } from "react";
 
+export const metadata = {
+  title: 'FinIQ Lite | Savings Goal',
+  description: 'Set and track your savings goals with FinIQ Lite.'
+};
+
 export default function SavingsGoalPage() {
   const [target, setTarget] = useState(50000);
   const [monthly, setMonthly] = useState(2000);
