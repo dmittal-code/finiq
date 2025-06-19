@@ -122,6 +122,7 @@ export default function InvestmentsPageClient() {
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
   const [totalAmount, setTotalAmount] = useState(10000);
 
+
   const handleInvestmentClick = (investment: InvestmentType) => {
     setSelectedInvestment(investment);
   };
@@ -172,7 +173,7 @@ export default function InvestmentsPageClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-slate-100 to-blue-100 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
@@ -188,9 +189,9 @@ export default function InvestmentsPageClient() {
             <button
               onClick={() => setShowPortfolioBuilder(false)}
               className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                !showPortfolioBuilder
-                  ? 'btn-primary'
-                  : 'btn-secondary'
+                !showPortfolioBuilder 
+                  ? 'bg-gradient-to-r from-gray-700 to-slate-700 text-white shadow-lg hover:from-gray-800 hover:to-slate-800' 
+                  : 'bg-white text-gray-600 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50'
               }`}
             >
               📊 Investment Types
@@ -198,9 +199,9 @@ export default function InvestmentsPageClient() {
             <button
               onClick={() => setShowPortfolioBuilder(true)}
               className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                showPortfolioBuilder
-                  ? 'btn-primary'
-                  : 'btn-secondary'
+                showPortfolioBuilder 
+                  ? 'bg-gradient-to-r from-gray-700 to-slate-700 text-white shadow-lg hover:from-gray-800 hover:to-slate-800' 
+                  : 'bg-white text-gray-600 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50'
               }`}
             >
               💼 Portfolio Builder
@@ -217,7 +218,7 @@ export default function InvestmentsPageClient() {
                 <div
                   key={investment.id}
                   onClick={() => handleInvestmentClick(investment)}
-                  className="card p-8 hover:shadow-xl transition-all duration-300 cursor-pointer group animate-scale-in"
+                  className="card p-8 hover:bg-gray-50 hover:border-gray-300 transition-all duration-300 cursor-pointer group animate-scale-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {/* Header */}
@@ -332,7 +333,7 @@ export default function InvestmentsPageClient() {
                       <button
                         key={investment.id}
                         onClick={() => addToPortfolio(investment)}
-                        className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 transition-all duration-300"
+                        className="flex items-center gap-3 p-4 border-2 border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
                       >
                         <span className="text-xl">{investment.icon}</span>
                         <span className="text-body font-semibold">{investment.name}</span>
@@ -344,7 +345,7 @@ export default function InvestmentsPageClient() {
                 {/* Portfolio Items */}
                 {portfolioItems.length > 0 && (
                   <div>
-                    <h4 className="text-heading-3 font-semibold text-gray-900 mb-6">Your Portfolio</h4>
+                    <h4 className="text-heading-3 font-bold text-gray-900 mb-6">Your Portfolio</h4>
                     <div className="space-y-4">
                       {portfolioItems.map((item) => (
                         <div key={item.type} className="flex items-center gap-4 p-6 border-2 border-gray-200 rounded-xl">
@@ -394,7 +395,7 @@ export default function InvestmentsPageClient() {
                   <div>
                     {/* Portfolio Stats */}
                     <div className="space-y-4 mb-8">
-                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-100 to-slate-100 rounded-xl">
                         <span className="text-body font-semibold">Total Allocation:</span>
                         <span className={`text-body-large font-bold ${getTotalPercentage() > 100 ? 'text-red-600' : 'text-green-600'}`}>
                           {getTotalPercentage()}%
@@ -459,7 +460,7 @@ export default function InvestmentsPageClient() {
 
                 {/* Key Metrics */}
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                  <div className="p-6 bg-gradient-to-r from-gray-100 to-slate-100 rounded-xl">
                     <h4 className="text-body font-bold text-gray-900 mb-3">Risk Level</h4>
                     <span className={`px-4 py-2 rounded-full text-body font-semibold ${riskLevels[selectedInvestment.riskLevel].color}`}>
                       {selectedInvestment.riskLevel}
@@ -521,13 +522,13 @@ export default function InvestmentsPageClient() {
                 <div className="flex justify-center gap-4">
                   <button
                     onClick={() => addToPortfolio(selectedInvestment)}
-                    className="btn-primary px-8 py-3"
+                    className="bg-gradient-to-r from-gray-700 to-slate-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-gray-800 hover:to-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     📊 Add to Portfolio
                   </button>
                   <button
                     onClick={closeModal}
-                    className="btn-secondary px-8 py-3"
+                    className="bg-white text-gray-600 border-2 border-gray-300 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
                   >
                     Close
                   </button>

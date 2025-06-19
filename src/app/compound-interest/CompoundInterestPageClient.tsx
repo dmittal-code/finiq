@@ -20,7 +20,7 @@ export default function CompoundInterestPageClient() {
   const interest = total - principal;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
@@ -94,7 +94,7 @@ export default function CompoundInterestPageClient() {
             
             {/* Main Result */}
             <div className="mb-8">
-              <div className="text-6xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              <div className="text-6xl font-black bg-gradient-to-r from-gray-700 to-slate-700 bg-clip-text text-transparent mb-4">
                 ₹{total.toLocaleString(undefined, { maximumFractionDigits: 0 })}
               </div>
               <p className="text-body-large text-gray-600">Final Amount</p>
@@ -102,17 +102,17 @@ export default function CompoundInterestPageClient() {
 
             {/* Breakdown */}
             <div className="space-y-4 mb-8">
-              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Initial Investment:</span>
-                <span className="text-body-large font-bold text-blue-600">₹{principal.toLocaleString()}</span>
+                <span className="text-body-large font-bold text-gray-700">₹{principal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Interest Earned:</span>
                 <span className="text-body-large font-bold text-green-600">₹{interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
               </div>
-              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
+              <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-slate-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Growth:</span>
-                <span className="text-body-large font-bold text-orange-600">
+                <span className="text-body-large font-bold text-blue-600">
                   {((interest / principal) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -133,21 +133,21 @@ export default function CompoundInterestPageClient() {
           <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Understanding Compound Interest</h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">📈</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Exponential Growth</h4>
               <p className="text-body text-gray-600 leading-relaxed">Your money grows faster over time as you earn interest on both your principal and previously earned interest</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">⏰</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Time is Key</h4>
               <p className="text-body text-gray-600 leading-relaxed">The longer you invest, the more powerful compound interest becomes. Start early to maximize growth</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">🔄</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Compounding Frequency</h4>
@@ -157,7 +157,7 @@ export default function CompoundInterestPageClient() {
         </div>
 
         {/* Tips */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 rounded-2xl p-8 mt-8 text-white animate-slide-in-left">
+        <div className="bg-gradient-to-r from-gray-700 via-slate-700 to-blue-700 rounded-2xl p-8 mt-8 text-white animate-slide-in-left">
           <h3 className="text-heading-2 font-bold mb-6 text-center">💡 Pro Tips for Indian Teens</h3>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -165,14 +165,14 @@ export default function CompoundInterestPageClient() {
                 <span className="text-yellow-400 text-xl">🎯</span>
                 <div>
                   <h4 className="font-semibold mb-1">Start with SIPs</h4>
-                  <p className="text-blue-100 text-body-small">Systematic Investment Plans let you invest small amounts regularly</p>
+                  <p className="text-gray-100 text-body-small">Systematic Investment Plans let you invest small amounts regularly</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-yellow-400 text-xl">📱</span>
                 <div>
                   <h4 className="font-semibold mb-1">Use Apps</h4>
-                  <p className="text-blue-100 text-body-small">Apps like Groww, Zerodha allow investments starting from ₹100</p>
+                  <p className="text-gray-100 text-body-small">Apps like Groww, Zerodha allow investments starting from ₹100</p>
                 </div>
               </div>
             </div>
@@ -181,14 +181,14 @@ export default function CompoundInterestPageClient() {
                 <span className="text-yellow-400 text-xl">🏦</span>
                 <div>
                   <h4 className="font-semibold mb-1">PPF & ELSS</h4>
-                  <p className="text-blue-100 text-body-small">Tax-saving options with good compound growth potential</p>
+                  <p className="text-gray-100 text-body-small">Tax-saving options with good compound growth potential</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-yellow-400 text-xl">💰</span>
                 <div>
                   <h4 className="font-semibold mb-1">Pocket Money</h4>
-                  <p className="text-blue-100 text-body-small">Even ₹500/month can grow to lakhs over 10-15 years!</p>
+                  <p className="text-gray-100 text-body-small">Even ₹500/month can grow to lakhs over 10-15 years!</p>
                 </div>
               </div>
             </div>

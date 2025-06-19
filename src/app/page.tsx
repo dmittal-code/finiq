@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "../contexts/AuthContext";
 
 const modules = [
-  { href: "/terms", label: "📚 Financial Terms Glossary", description: "Master essential financial concepts and terminology", color: "from-blue-500 to-cyan-500" },
-  { href: "/quizzes", label: "📝 Interactive Quizzes", description: "Test your knowledge with fun financial quizzes", color: "from-purple-500 to-pink-500" },
-  { href: "/flashcards", label: "🃏 Learning Flashcards", description: "Review key concepts with interactive flashcards", color: "from-green-500 to-emerald-500" },
-  { href: "/compound-interest", label: "📈 Compound Interest Simulator", description: "See how your money grows over time", color: "from-orange-500 to-red-500" },
-  { href: "/risk-vs-reward", label: "🎲 Risk vs Reward Explorer", description: "Understand investment risks and potential returns", color: "from-indigo-500 to-purple-500" },
-  { href: "/investments", label: "💸 Investment Types Guide", description: "Learn about different investment options", color: "from-teal-500 to-blue-500" },
-  { href: "/savings-goal", label: "🎯 Savings Goal Calculator", description: "Plan and track your savings goals", color: "from-yellow-500 to-orange-500" },
+  { href: "/terms", label: "📚 Financial Terms Glossary", description: "Master essential financial concepts and terminology", color: "from-gray-600 to-slate-600" },
+  { href: "/quizzes", label: "📝 Interactive Quizzes", description: "Test your knowledge with fun financial quizzes", color: "from-slate-600 to-gray-600" },
+  { href: "/flashcards", label: "🃏 Learning Flashcards", description: "Review key concepts with interactive flashcards", color: "from-gray-700 to-slate-700" },
+  { href: "/compound-interest", label: "📈 Compound Interest Simulator", description: "See how your money grows over time", color: "from-slate-700 to-gray-700" },
+  { href: "/risk-vs-reward", label: "🎲 Risk vs Reward Explorer", description: "Understand investment risks and potential returns", color: "from-gray-600 to-slate-600" },
+  { href: "/investments", label: "💸 Investment Types Guide", description: "Learn about different investment options", color: "from-slate-600 to-gray-600" },
+  { href: "/savings-goal", label: "🎯 Savings Goal Calculator", description: "Plan and track your savings goals", color: "from-gray-700 to-slate-700" },
 ];
 
 const features = [
@@ -17,35 +18,37 @@ const features = [
     icon: "🎓",
     title: "Age-Appropriate Learning",
     description: "Designed specifically for Indian teens (grades 10-12) with relatable examples and Indian context",
-    gradient: "from-blue-500 to-purple-500"
+    gradient: "from-gray-600 to-slate-600"
   },
   {
     icon: "💰",
     title: "Practical Financial Skills",
     description: "Learn real-world money management, investing, and saving strategies you can use today",
-    gradient: "from-green-500 to-emerald-500"
+    gradient: "from-slate-600 to-gray-600"
   },
   {
     icon: "🎮",
     title: "Interactive & Fun",
     description: "Engage with interactive tools, quizzes, and simulations to make learning enjoyable",
-    gradient: "from-purple-500 to-pink-500"
+    gradient: "from-gray-700 to-slate-700"
   },
   {
     icon: "🇮🇳",
     title: "Indian Context",
     description: "Understand financial concepts in the context of Indian markets, regulations, and opportunities",
-    gradient: "from-orange-500 to-red-500"
+    gradient: "from-slate-700 to-gray-700"
   }
 ];
 
 export default function Home() {
+  const { user } = useAuth();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-slate-100 to-blue-100">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-indigo-600/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-600/5 via-slate-600/5 to-gray-700/5"></div>
         <div className="absolute top-0 left-0 w-full h-full opacity-30" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
         }}></div>
@@ -53,16 +56,15 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center animate-fade-in">
             <div className="mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl shadow-2xl mb-6 animate-scale-in">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-gray-700 to-slate-700 rounded-3xl shadow-2xl mb-6 animate-scale-in">
                 <span className="text-3xl">💰</span>
               </div>
             </div>
             
             <h1 className="text-display font-black text-gray-900 mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-700 via-slate-700 to-gray-800 bg-clip-text text-transparent">
                 FinIQ
               </span>
-              <span className="text-gray-800"> Lite</span>
             </h1>
             
             <h2 className="text-heading-2 font-bold text-gray-800 mb-8 leading-relaxed">
@@ -77,16 +79,18 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-slide-in-left">
               <Link
                 href="/terms"
-                className="btn-primary text-lg px-10 py-4"
+                className="bg-gradient-to-r from-gray-700 to-slate-700 text-white text-lg px-10 py-4 rounded-lg font-semibold hover:from-gray-800 hover:to-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 🚀 Start Learning
               </Link>
-              <Link
-                href="/quizzes"
-                className="btn-secondary text-lg px-10 py-4"
-              >
-                🎯 Take a Quiz
-              </Link>
+              {user && (
+                <Link
+                  href="/quizzes"
+                  className="bg-white text-gray-600 border-2 border-gray-300 text-lg px-10 py-4 rounded-lg font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
+                >
+                  🎯 Take a Quiz
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -121,7 +125,7 @@ export default function Home() {
       </div>
 
       {/* Learning Modules Section */}
-      <div className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="py-20 bg-gradient-to-br from-gray-100 via-slate-100 to-blue-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h3 className="text-heading-1 font-bold text-gray-900 mb-6">Your Learning Journey</h3>
@@ -131,7 +135,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {modules.map((mod, index) => (
+            {modules.filter(mod => user || mod.href !== "/quizzes").map((mod, index) => (
               <Link
                 key={mod.href}
                 href={mod.href}
@@ -144,11 +148,11 @@ export default function Home() {
                       <span className="text-2xl">{mod.label.split(' ')[0]}</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-heading-3 font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
+                      <h4 className="text-heading-3 font-semibold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors leading-tight">
                         {mod.label.split(' ').slice(1).join(' ')}
                       </h4>
                       <p className="text-body text-gray-600 leading-relaxed">{mod.description}</p>
-                      <div className="mt-4 flex items-center text-blue-600 text-body-small font-medium group-hover:text-blue-700 transition-colors">
+                      <div className="mt-4 flex items-center text-gray-600 text-body-small font-medium group-hover:text-gray-700 transition-colors">
                         <span>Explore module</span>
                         <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -164,7 +168,7 @@ export default function Home() {
       </div>
 
       {/* Call to Action */}
-      <div className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 relative overflow-hidden">
+      <div className="py-20 bg-gradient-to-r from-gray-700 via-slate-700 to-gray-800 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-30" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
@@ -174,12 +178,12 @@ export default function Home() {
           <h3 className="text-heading-1 font-bold text-white mb-6">
             Ready to Master Your Financial Future?
           </h3>
-          <p className="text-body-large text-blue-100 mb-10 leading-relaxed">
+          <p className="text-body-large text-gray-100 mb-10 leading-relaxed">
             Join thousands of Indian teens building essential money skills for life
           </p>
           <Link
             href="/terms"
-            className="btn-accent text-lg px-12 py-4 inline-flex items-center space-x-2"
+            className="bg-white text-gray-800 text-lg px-12 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center space-x-2"
           >
             <span>Start Your Financial Education Today</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +197,7 @@ export default function Home() {
       <footer className="py-12 bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-gray-700 to-slate-700 rounded-xl mb-4">
               <span className="text-lg">💰</span>
             </div>
                           <h4 className="text-heading-3 font-bold text-white mb-2">FinIQ</h4>
