@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Flashcard {
   id: number;
@@ -10,14 +10,14 @@ interface Flashcard {
 }
 
 const flashcards: Flashcard[] = [
-  { id: 1, term: 'Compound Interest', definition: 'Interest earned on both the principal amount and any previously earned interest. It\'s often called \'interest on interest\' and helps money grow faster over time.', category: 'Investing' },
+  { id: 1, term: 'Compound Interest', definition: 'Interest earned on both the principal amount and any previously earned interest. It&apos;s often called &apos;interest on interest&apos; and helps money grow faster over time.', category: 'Investing' },
   { id: 2, term: 'Emergency Fund', definition: 'A savings account with 3-6 months of living expenses set aside for unexpected financial emergencies like job loss or medical bills.', category: 'Savings' },
-  { id: 3, term: 'Diversification', definition: 'Spreading investments across different assets, sectors, or geographic regions to reduce risk. The saying goes: \'Don\'t put all your eggs in one basket.\'', category: 'Investing' },
+  { id: 3, term: 'Diversification', definition: 'Spreading investments across different assets, sectors, or geographic regions to reduce risk. The saying goes: &apos;Don&apos;t put all your eggs in one basket.&apos;', category: 'Investing' },
   { id: 4, term: 'Credit Score', definition: 'A three-digit number (300-850) that represents your creditworthiness. Higher scores help you get better loan terms and lower interest rates.', category: 'Credit' },
   { id: 5, term: 'Budget', definition: 'A financial plan that tracks income and expenses to help you spend within your means and save for goals.', category: 'Planning' },
   { id: 6, term: 'Inflation', definition: 'The rate at which prices for goods and services increase over time, reducing the purchasing power of money.', category: 'Economics' },
   { id: 7, term: 'Mutual Fund', definition: 'An investment vehicle that pools money from many investors to buy a diversified portfolio of stocks, bonds, or other securities.', category: 'Investing' },
-  { id: 8, term: 'Net Worth', definition: 'The difference between your total assets (what you own) and total liabilities (what you owe). It\'s a measure of your financial health.', category: 'Planning' },
+  { id: 8, term: 'Net Worth', definition: 'The difference between your total assets (what you own) and total liabilities (what you owe). It&apos;s a measure of your financial health.', category: 'Planning' },
   { id: 9, term: 'ROI (Return on Investment)', definition: 'A measure of the profitability of an investment, calculated as (Gain - Cost) / Cost × 100. Shows how much money you made relative to what you invested.', category: 'Investing' },
   { id: 10, term: 'Liquidity', definition: 'How easily an asset can be converted to cash without losing value. Cash is the most liquid asset, while real estate is less liquid.', category: 'Investing' },
   { id: 11, term: 'Debt-to-Income Ratio', definition: 'A percentage that compares your monthly debt payments to your monthly income. Lenders use this to assess your ability to take on new debt.', category: 'Credit' },
@@ -41,20 +41,20 @@ export default function FlashcardsPageClient() {
   const currentCard = flashcards[currentCardIndex];
   const progress = (completedCards.size / flashcards.length) * 100;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCompletedCards(prev => new Set([...prev, currentCard.id]));
     setIsFlipped(false);
     setCurrentCardIndex((prev) => (prev + 1) % flashcards.length);
-  };
+  }, [currentCard.id]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setIsFlipped(false);
     setCurrentCardIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
-  };
+  }, []);
 
-  const handleFlip = () => {
+  const handleFlip = useCallback(() => {
     setIsFlipped(!isFlipped);
-  };
+  }, [isFlipped]);
 
   const handleShuffle = () => {
     setIsFlipped(false);
@@ -95,7 +95,7 @@ export default function FlashcardsPageClient() {
     }
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentCardIndex, isFlipped, handleNext, handleFlip]);
+  }, [currentCardIndex, isFlipped, handleNext, handleFlip, handlePrevious]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
