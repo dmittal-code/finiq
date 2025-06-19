@@ -112,11 +112,11 @@ export default function QuizzesPageClient() {
   };
 
   const getScoreMessage = (percentage: number) => {
-    if (percentage >= 90) return { message: 'Excellent! You\'re a financial expert!', color: 'text-green-600' };
-    if (percentage >= 80) return { message: 'Great job! You have strong financial knowledge!', color: 'text-green-500' };
-    if (percentage >= 70) return { message: 'Good work! You understand the basics well!', color: 'text-blue-500' };
-    if (percentage >= 60) return { message: 'Not bad! Keep learning to improve!', color: 'text-yellow-600' };
-    return { message: 'Keep studying! Financial literacy is a journey!', color: 'text-red-500' };
+    if (percentage >= 90) return { message: 'Excellent! You\'re a financial expert!', color: 'text-green-600', icon: '🏆' };
+    if (percentage >= 80) return { message: 'Great job! You have strong financial knowledge!', color: 'text-green-500', icon: '🎉' };
+    if (percentage >= 70) return { message: 'Good work! You understand the basics well!', color: 'text-blue-500', icon: '👍' };
+    if (percentage >= 60) return { message: 'Not bad! Keep learning to improve!', color: 'text-yellow-600', icon: '📚' };
+    return { message: 'Keep studying! Financial literacy is a journey!', color: 'text-red-500', icon: '💪' };
   };
 
   useEffect(() => {
@@ -144,36 +144,36 @@ export default function QuizzesPageClient() {
     const currentQuestion = quizState.currentQuiz.questions[quizState.currentQuestionIndex];
     const isAnswered = quizState.selectedAnswers[quizState.currentQuestionIndex] !== -1;
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+          <div className="text-center mb-8 animate-fade-in">
+            <h1 className="text-heading-1 font-bold text-gray-900 mb-4">
               {quizState.currentQuiz.title}
             </h1>
-            <p className="text-gray-600 mb-4">{quizState.currentQuiz.description}</p>
+            <p className="text-body-large text-gray-600 mb-6">{quizState.currentQuiz.description}</p>
             {/* Progress and Timer */}
             <div className="flex justify-between items-center mb-6">
-              <div className="text-sm text-gray-600">
-                Question {quizState.currentQuestionIndex + 1} of {quizState.currentQuiz.questions.length}
+              <div className="text-body text-gray-600">
+                Question <span className="font-semibold text-blue-600">{quizState.currentQuestionIndex + 1}</span> of <span className="font-semibold text-gray-800">{quizState.currentQuiz.questions.length}</span>
               </div>
               {quizState.currentQuiz.timeLimit && (
-                <div className="text-sm font-medium text-gray-700">
-                  Time: {formatTime(quizState.timeRemaining)}
+                <div className="text-body font-medium text-gray-700 bg-white/80 px-4 py-2 rounded-xl shadow-sm">
+                  ⏱️ Time: {formatTime(quizState.timeRemaining)}
                 </div>
               )}
             </div>
             {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+            <div className="w-full bg-gray-200 rounded-full h-3 mb-8">
               <div 
-                className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${((quizState.currentQuestionIndex + 1) / quizState.currentQuiz.questions.length) * 100}%` }}
               ></div>
             </div>
           </div>
           {/* Question */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+          <div className="card p-8 mb-8 animate-scale-in">
+            <h2 className="text-heading-2 font-semibold text-gray-900 mb-8 leading-relaxed">
               {currentQuestion.question}
             </h2>
             {/* Options */}
@@ -182,14 +182,14 @@ export default function QuizzesPageClient() {
                 <button
                   key={index}
                   onClick={() => selectAnswer(index)}
-                  className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 ${
+                  className={`w-full p-6 text-left rounded-xl border-2 transition-all duration-300 transform hover:scale-[1.02] ${
                     quizState.selectedAnswers[quizState.currentQuestionIndex] === index
-                      ? 'border-green-500 bg-green-50 text-green-800'
-                      : 'border-gray-200 hover:border-green-300 hover:bg-green-50'
+                      ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 text-blue-800 shadow-lg'
+                      : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
                   }`}
                 >
-                  <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
-                  {option}
+                  <span className="font-semibold mr-4 text-lg">{String.fromCharCode(65 + index)}.</span>
+                  <span className="text-body leading-relaxed">{option}</span>
                 </button>
               ))}
             </div>
@@ -198,24 +198,24 @@ export default function QuizzesPageClient() {
           <div className="flex justify-between items-center">
             <button
               onClick={resetQuiz}
-              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              className="btn-secondary"
             >
-              Exit Quiz
+              🚪 Exit Quiz
             </button>
             <div className="flex gap-4">
               <button
                 onClick={previousQuestion}
                 disabled={quizState.currentQuestionIndex === 0}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 ← Previous
               </button>
               <button
                 onClick={nextQuestion}
                 disabled={!isAnswered}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {quizState.currentQuestionIndex === quizState.currentQuiz.questions.length - 1 ? 'Finish' : 'Next →'}
+                {quizState.currentQuestionIndex === quizState.currentQuiz.questions.length - 1 ? '🎯 Finish' : 'Next →'}
               </button>
             </div>
           </div>
@@ -228,64 +228,66 @@ export default function QuizzesPageClient() {
     const score = calculateScore();
     const scoreMessage = getScoreMessage(score.percentage);
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Results Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+          <div className="text-center mb-8 animate-fade-in">
+            <h1 className="text-heading-1 font-bold text-gray-900 mb-4">
               Quiz Results
             </h1>
-            <h2 className="text-xl text-gray-600 mb-6">{quizState.currentQuiz.title}</h2>
+            <h2 className="text-heading-2 text-gray-600 mb-8">{quizState.currentQuiz.title}</h2>
             {/* Score Display */}
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <div className="text-6xl font-bold text-green-600 mb-4">
+            <div className="card p-10 mb-8 animate-scale-in">
+              <div className="text-7xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
                 {score.percentage}%
               </div>
-              <div className={`text-xl font-semibold mb-4 ${scoreMessage.color}`}>
+              <div className={`text-heading-2 font-semibold mb-4 ${scoreMessage.color} flex items-center justify-center gap-3`}>
+                <span>{scoreMessage.icon}</span>
                 {scoreMessage.message}
               </div>
-              <div className="text-gray-600">
-                You got {score.correct} out of {score.total} questions correct.
+              <div className="text-body-large text-gray-600">
+                You got <span className="font-semibold text-blue-600">{score.correct}</span> out of <span className="font-semibold text-gray-800">{score.total}</span> questions correct.
               </div>
             </div>
           </div>
           {/* Detailed Results */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-6">Question Review</h3>
-            <div className="space-y-6">
+          <div className="card p-8 mb-8 animate-slide-in-left">
+            <h3 className="text-heading-2 font-bold text-gray-900 mb-8">Question Review</h3>
+            <div className="space-y-8">
               {quizState.currentQuiz.questions.map((question, index) => {
                 const selectedAnswer = quizState.selectedAnswers[index];
                 const isCorrect = selectedAnswer === question.correctAnswer;
                 return (
-                  <div key={index} className="border-l-4 border-gray-200 pl-4">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
-                        isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                  <div key={index} className="border-l-4 border-gray-200 pl-6 py-4">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shadow-lg ${
+                        isCorrect ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' : 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
                       }`}>
                         {isCorrect ? '✓' : '✗'}
                       </div>
                       <div className="flex-1">
-                        <p className="font-medium text-gray-800 mb-2">
+                        <p className="text-heading-3 font-semibold text-gray-900 mb-4 leading-relaxed">
                           Question {index + 1}: {question.question}
                         </p>
-                        <div className="space-y-1">
+                        <div className="space-y-2 mb-4">
                           {question.options.map((option, optionIndex) => (
                             <div
                               key={optionIndex}
-                              className={`p-2 rounded ${
+                              className={`p-4 rounded-xl border-2 ${
                                 optionIndex === question.correctAnswer
-                                  ? 'bg-green-100 text-green-800 border border-green-300'
+                                  ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 border-green-300'
                                   : optionIndex === selectedAnswer && !isCorrect
-                                  ? 'bg-red-100 text-red-800 border border-red-300'
-                                  : 'bg-gray-50 text-gray-600'
+                                  ? 'bg-gradient-to-r from-red-50 to-pink-50 text-red-800 border-red-300'
+                                  : 'bg-gray-50 text-gray-600 border-gray-200'
                               }`}
                             >
-                              <span className="font-medium">{String.fromCharCode(65 + optionIndex)}.</span> {option}
+                              <span className="font-semibold mr-3">{String.fromCharCode(65 + optionIndex)}.</span> 
+                              <span className="text-body">{option}</span>
                             </div>
                           ))}
                         </div>
-                        <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                          <p className="text-sm text-blue-800">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-400 p-4 rounded-r-xl">
+                          <p className="text-body text-blue-800 leading-relaxed">
                             <strong>Explanation:</strong> {question.explanation}
                           </p>
                         </div>
@@ -297,12 +299,12 @@ export default function QuizzesPageClient() {
             </div>
           </div>
           {/* Action Buttons */}
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-6">
             <button
               onClick={resetQuiz}
-              className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              className="btn-primary text-lg px-10 py-4"
             >
-              Take Another Quiz
+              🎯 Take Another Quiz
             </button>
           </div>
         </div>
@@ -312,70 +314,74 @@ export default function QuizzesPageClient() {
 
   // Quiz Selection Screen
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-16 animate-fade-in">
+          <h1 className="text-heading-1 font-bold text-gray-900 mb-6">
             Financial Literacy Quizzes
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-body-large text-gray-600 leading-relaxed">
             Test your knowledge and track your progress in financial literacy
           </p>
         </div>
         {/* Quiz Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {quizzes.map((quiz) => (
-            <div key={quiz.id} className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          {quizzes.map((quiz, index) => (
+            <div 
+              key={quiz.id} 
+              className="card p-8 hover:shadow-xl transition-all duration-300 animate-scale-in"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-800 mb-3">{quiz.title}</h2>
-                <p className="text-gray-600 mb-6">{quiz.description}</p>
-                <div className="flex justify-center items-center gap-6 mb-6 text-sm text-gray-500">
+                <h2 className="text-heading-2 font-bold text-gray-900 mb-4">{quiz.title}</h2>
+                <p className="text-body text-gray-600 mb-8 leading-relaxed">{quiz.description}</p>
+                <div className="flex justify-center items-center gap-8 mb-8 text-body-small text-gray-500">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
                     {quiz.questions.length} Questions
                   </div>
                   {quiz.timeLimit && (
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></span>
                       {quiz.timeLimit} Minutes
                     </div>
                   )}
                 </div>
                 <button
                   onClick={() => startQuiz(quiz)}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-semibold"
+                  className="w-full btn-primary text-lg py-4"
                 >
-                  Start Quiz
+                  🚀 Start Quiz
                 </button>
               </div>
             </div>
           ))}
         </div>
         {/* Features */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Quiz Features</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+        <div className="card p-10 animate-fade-in">
+          <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Quiz Features</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">📊</span>
               </div>
-              <h4 className="font-semibold text-gray-800 mb-2">Detailed Results</h4>
-              <p className="text-gray-600 text-sm">Get explanations for every question and track your progress</p>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Detailed Results</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Get explanations for every question and track your progress</p>
             </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">⏱️</span>
               </div>
-              <h4 className="font-semibold text-gray-800 mb-2">Timed Quizzes</h4>
-              <p className="text-gray-600 text-sm">Challenge yourself with time limits to simulate real exam conditions</p>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Timed Quizzes</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Challenge yourself with time limits to simulate real exam conditions</p>
             </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">🎯</span>
               </div>
-              <h4 className="font-semibold text-gray-800 mb-2">Multiple Topics</h4>
-              <p className="text-gray-600 text-sm">Cover various financial concepts from basic terms to investment strategies</p>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Multiple Topics</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Cover various financial concepts from basic terms to investment strategies</p>
             </div>
           </div>
         </div>

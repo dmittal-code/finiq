@@ -87,41 +87,41 @@ export default function EditTermPageClient() {
 
   return (
     <ProtectedRoute requireAdmin>
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-heading-1 font-bold text-gray-900 mb-6">
               Edit Financial Term
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-body-large text-gray-600 leading-relaxed">
               Update the details of this glossary term
             </p>
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="card p-10 animate-scale-in">
             {isLoading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading term details...</p>
+              <div className="text-center py-16">
+                <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-6"></div>
+                <p className="text-body-large text-gray-600">Loading term details...</p>
               </div>
             ) : success ? (
-              <div className="text-center py-12">
-                <div className="w-24 h-24 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="text-center py-16 animate-fade-in">
+                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Term Updated Successfully!</h3>
-                <p className="text-gray-600 mb-4">Redirecting to admin dashboard...</p>
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                <h3 className="text-heading-2 font-bold text-gray-900 mb-4">Term Updated Successfully!</h3>
+                <p className="text-body-large text-gray-600 mb-6">Redirecting to admin dashboard...</p>
+                <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent mx-auto"></div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Term */}
                 <div>
-                  <label htmlFor="term" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="term" className="block text-heading-3 font-semibold text-gray-900 mb-3">
                     Term *
                   </label>
                   <input
@@ -131,14 +131,14 @@ export default function EditTermPageClient() {
                     value={formData.term}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    className="input-enhanced"
                     placeholder="e.g., Compound Interest"
                   />
                 </div>
 
                 {/* Definition */}
                 <div>
-                  <label htmlFor="definition" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="definition" className="block text-heading-3 font-semibold text-gray-900 mb-3">
                     Definition *
                   </label>
                   <textarea
@@ -148,14 +148,14 @@ export default function EditTermPageClient() {
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    className="input-enhanced resize-none"
                     placeholder="Provide a clear, concise definition of the term..."
                   />
                 </div>
 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="category" className="block text-heading-3 font-semibold text-gray-900 mb-3">
                     Category *
                   </label>
                   <select
@@ -164,7 +164,7 @@ export default function EditTermPageClient() {
                     value={formData.category}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    className="input-enhanced"
                   >
                     <option value="">Select a category</option>
                     {categories.map((category) => (
@@ -177,7 +177,7 @@ export default function EditTermPageClient() {
 
                 {/* Example */}
                 <div>
-                  <label htmlFor="example" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="example" className="block text-heading-3 font-semibold text-gray-900 mb-3">
                     Example (Optional)
                   </label>
                   <textarea
@@ -186,33 +186,33 @@ export default function EditTermPageClient() {
                     value={formData.example}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    className="input-enhanced resize-none"
                     placeholder="Provide a practical example to help users understand the term..."
                   />
                 </div>
 
                 {/* Error Message */}
                 {error && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-red-600 text-sm">{error}</p>
+                  <div className="bg-gradient-to-r from-red-50 to-pink-50 border-l-4 border-red-400 p-6 rounded-r-xl animate-fade-in">
+                    <p className="text-body text-red-800 leading-relaxed">{error}</p>
                   </div>
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
+                <div className="flex justify-end gap-6 pt-8 border-t border-gray-200">
                   <button
                     type="button"
                     onClick={() => router.push('/admin/terms')}
-                    className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                    className="btn-secondary"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Saving...' : 'Save Changes'}
+                    {isSubmitting ? '💾 Saving...' : '✅ Save Changes'}
                   </button>
                 </div>
               </form>

@@ -32,10 +32,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <NavBar />
-          {children}
-          <footer className="w-full text-center py-4 mt-12 text-gray-500 text-sm border-t border-gray-200 bg-white/80 backdrop-blur-sm">
-            Built by Kartik Mittal – proud student of SBS, Noida.
-          </footer>
+          <main className="min-h-screen">
+            {children}
+          </main>
         </AuthProvider>
       </body>
     </html>
