@@ -2,6 +2,52 @@
 
 import { useState } from 'react';
 
+// Indian number formatting function
+const formatIndianNumber = (num: number): string => {
+  if (num < 1000) {
+    return num.toString();
+  }
+  
+  const numStr = Math.round(num).toString();
+  const len = numStr.length;
+  
+  if (len <= 3) {
+    return numStr;
+  } else if (len <= 5) {
+    // Thousands (1,000 to 99,999)
+    return numStr.slice(0, len - 3) + ',' + numStr.slice(len - 3);
+  } else if (len <= 7) {
+    // Lakhs (1,00,000 to 99,99,999)
+    return numStr.slice(0, len - 5) + ',' + numStr.slice(len - 5, len - 3) + ',' + numStr.slice(len - 3);
+  } else {
+    // Crores (1,00,00,000 and above)
+    const crores = Math.floor(num / 10000000);
+    const remainder = num % 10000000;
+    
+    if (remainder === 0) {
+      return crores + ' crore' + (crores > 1 ? 's' : '');
+    } else if (remainder < 100000) {
+      const thousands = Math.floor(remainder / 1000);
+      if (thousands === 0) {
+        return crores + ' crore' + (crores > 1 ? 's' : '');
+      } else {
+        return crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + formatIndianNumber(remainder);
+      }
+    } else {
+      const lakhs = Math.floor(remainder / 100000);
+      const remainingAfterLakhs = remainder % 100000;
+      
+      let result = crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + lakhs + ' lakh' + (lakhs > 1 ? 's' : '');
+      
+      if (remainingAfterLakhs > 0) {
+        result += ' ' + formatIndianNumber(remainingAfterLakhs);
+      }
+      
+      return result;
+    }
+  }
+};
+
 export default function CompoundInterestPageClient() {
   const [principal, setPrincipal] = useState(10000);
   const [rate, setRate] = useState(5);
@@ -95,7 +141,7 @@ export default function CompoundInterestPageClient() {
             {/* Main Result */}
             <div className="mb-8">
               <div className="text-6xl font-black bg-gradient-to-r from-gray-700 to-slate-700 bg-clip-text text-transparent mb-4">
-                ₹{total.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                ₹{formatIndianNumber(total)}
               </div>
               <p className="text-body-large text-gray-600">Final Amount</p>
             </div>
@@ -104,11 +150,11 @@ export default function CompoundInterestPageClient() {
             <div className="space-y-4 mb-8">
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Initial Investment:</span>
-                <span className="text-body-large font-bold text-gray-700">₹{principal.toLocaleString()}</span>
+                <span className="text-body-large font-bold text-gray-700">₹{formatIndianNumber(principal)}</span>
               </div>
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Interest Earned:</span>
-                <span className="text-body-large font-bold text-green-600">₹{interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                <span className="text-body-large font-bold text-green-600">₹{formatIndianNumber(interest)}</span>
               </div>
               <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-slate-50 rounded-xl">
                 <span className="text-body font-semibold text-gray-700">Growth:</span>

@@ -2,6 +2,52 @@
 
 import { useState } from "react";
 
+// Indian number formatting function
+const formatIndianNumber = (num: number): string => {
+  if (num < 1000) {
+    return num.toString();
+  }
+  
+  const numStr = Math.round(num).toString();
+  const len = numStr.length;
+  
+  if (len <= 3) {
+    return numStr;
+  } else if (len <= 5) {
+    // Thousands (1,000 to 99,999)
+    return numStr.slice(0, len - 3) + ',' + numStr.slice(len - 3);
+  } else if (len <= 7) {
+    // Lakhs (1,00,000 to 99,99,999)
+    return numStr.slice(0, len - 5) + ',' + numStr.slice(len - 5, len - 3) + ',' + numStr.slice(len - 3);
+  } else {
+    // Crores (1,00,00,000 and above)
+    const crores = Math.floor(num / 10000000);
+    const remainder = num % 10000000;
+    
+    if (remainder === 0) {
+      return crores + ' crore' + (crores > 1 ? 's' : '');
+    } else if (remainder < 100000) {
+      const thousands = Math.floor(remainder / 1000);
+      if (thousands === 0) {
+        return crores + ' crore' + (crores > 1 ? 's' : '');
+      } else {
+        return crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + formatIndianNumber(remainder);
+      }
+    } else {
+      const lakhs = Math.floor(remainder / 100000);
+      const remainingAfterLakhs = remainder % 100000;
+      
+      let result = crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + lakhs + ' lakh' + (lakhs > 1 ? 's' : '');
+      
+      if (remainingAfterLakhs > 0) {
+        result += ' ' + formatIndianNumber(remainingAfterLakhs);
+      }
+      
+      return result;
+    }
+  }
+};
+
 export default function SavingsGoalPageClient() {
   const [goalAmount, setGoalAmount] = useState(10000);
   const [currentSavings, setCurrentSavings] = useState(2000);
@@ -150,11 +196,11 @@ export default function SavingsGoalPageClient() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-center">
-                  <div className="text-3xl font-black text-green-600 mb-2">₹{currentSavings.toLocaleString()}</div>
+                  <div className="text-3xl font-black text-green-600 mb-2">₹{formatIndianNumber(currentSavings)}</div>
                   <div className="text-body-small text-gray-600 font-semibold">Current Savings</div>
                 </div>
                 <div className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl text-center">
-                  <div className="text-3xl font-black text-orange-600 mb-2">₹{(goalAmount - currentSavings).toLocaleString()}</div>
+                  <div className="text-3xl font-black text-orange-600 mb-2">₹{formatIndianNumber(goalAmount - currentSavings)}</div>
                   <div className="text-body-small text-gray-600 font-semibold">Remaining</div>
                 </div>
               </div>
@@ -167,7 +213,7 @@ export default function SavingsGoalPageClient() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
                   <span className="text-body font-semibold">Projected Savings:</span>
-                  <span className="text-body-large font-bold text-blue-600">₹{projectedSavings.toLocaleString()}</span>
+                  <span className="text-body-large font-bold text-blue-600">₹{formatIndianNumber(projectedSavings)}</span>
                 </div>
 
                 <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">

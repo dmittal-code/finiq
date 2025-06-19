@@ -49,7 +49,7 @@ export default function AdminTermsPageClient() {
 
   return (
     <ProtectedRoute requireAdmin>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16 animate-fade-in">
@@ -101,7 +101,7 @@ export default function AdminTermsPageClient() {
               <div className="overflow-hidden rounded-xl border border-gray-200">
                 <table className="min-w-full">
                   <thead>
-                    <tr className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white">
+                    <tr className="bg-gradient-to-r from-gray-700 via-slate-700 to-blue-700 text-white">
                       <th className="px-6 py-4 text-left text-body font-bold">Term</th>
                       <th className="px-6 py-4 text-left text-body font-bold">Definition</th>
                       <th className="px-6 py-4 text-left text-body font-bold">Category</th>
@@ -110,7 +110,7 @@ export default function AdminTermsPageClient() {
                   </thead>
                   <tbody className="bg-white">
                     {filteredTerms.map((term, index) => (
-                      <tr key={term.id} className={`border-b border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                      <tr key={term.id} className={`border-b border-gray-200 hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 transition-all duration-200 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
                         <td className="px-6 py-4">
                           <span className="text-body font-bold text-gray-900">{term.term}</span>
                         </td>
@@ -120,7 +120,7 @@ export default function AdminTermsPageClient() {
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-body-small font-semibold">
+                          <span className="px-3 py-1 bg-gradient-to-r from-gray-100 to-slate-100 text-gray-800 rounded-full text-body-small font-semibold">
                             {term.category}
                           </span>
                         </td>
@@ -168,16 +168,16 @@ export default function AdminTermsPageClient() {
           <div className="card p-8 mt-8 animate-slide-in-left">
             <h3 className="text-heading-2 font-bold text-gray-900 mb-6 text-center">📊 Glossary Statistics</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
-                <div className="text-4xl font-black text-blue-600 mb-2">{terms.length}</div>
+              <div className="text-center p-6 bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl">
+                <div className="text-4xl font-black text-gray-700 mb-2">{terms.length}</div>
                 <div className="text-body font-semibold text-gray-700">Total Terms</div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
-                <div className="text-4xl font-black text-green-600 mb-2">{new Set(terms.map(t => t.category)).size}</div>
+              <div className="text-center p-6 bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl">
+                <div className="text-4xl font-black text-slate-700 mb-2">{new Set(terms.map(t => t.category)).size}</div>
                 <div className="text-body font-semibold text-gray-700">Categories</div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
-                <div className="text-4xl font-black text-orange-600 mb-2">{filteredTerms.length}</div>
+              <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-slate-50 rounded-xl">
+                <div className="text-4xl font-black text-blue-600 mb-2">{filteredTerms.length}</div>
                 <div className="text-body font-semibold text-gray-700">Filtered Results</div>
               </div>
             </div>

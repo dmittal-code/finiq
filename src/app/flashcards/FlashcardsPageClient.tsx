@@ -98,7 +98,7 @@ export default function FlashcardsPageClient() {
   }, [currentCardIndex, isFlipped, handleNext, handleFlip, handlePrevious]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
@@ -111,12 +111,12 @@ export default function FlashcardsPageClient() {
           {/* Progress Bar */}
           <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 shadow-sm"
+              className="bg-gradient-to-r from-gray-600 to-slate-600 h-3 rounded-full transition-all duration-500 shadow-sm"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
           <div className="flex justify-between text-body-small text-gray-600">
-            <span>Progress: <span className="font-semibold text-blue-600">{completedCards.size}</span>/{flashcards.length} completed</span>
+            <span>Progress: <span className="font-semibold text-gray-700">{completedCards.size}</span>/{flashcards.length} completed</span>
             <span className="font-semibold text-gray-800">{Math.round(progress)}%</span>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function FlashcardsPageClient() {
             }`}>
               {/* Front of card */}
               <div className="absolute w-full h-full card p-8 flex flex-col justify-center items-center backface-hidden animate-scale-in">
-                <div className="text-body-small text-blue-600 font-semibold mb-4 px-3 py-1 bg-blue-50 rounded-full">
+                <div className="text-body-small text-gray-700 font-semibold mb-4 px-3 py-1 bg-gray-100 rounded-full">
                   {currentCard.category}
                 </div>
                 <h2 className="text-heading-1 font-bold text-gray-900 text-center mb-6 leading-tight">
@@ -142,19 +142,19 @@ export default function FlashcardsPageClient() {
                   💡 Tap to see definition
                 </div>
                 <div className="text-body-small text-gray-400">
-                  Card <span className="font-semibold text-blue-600">{currentCardIndex + 1}</span> of <span className="font-semibold text-gray-600">{flashcards.length}</span>
+                  Card <span className="font-semibold text-gray-700">{currentCardIndex + 1}</span> of <span className="font-semibold text-gray-600">{flashcards.length}</span>
                 </div>
               </div>
               {/* Back of card */}
-              <div className="absolute w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center backface-hidden rotate-y-180 border border-blue-200">
-                <div className="text-body-small text-blue-100 font-semibold mb-4 px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm">
+              <div className="absolute w-full h-full bg-gradient-to-br from-gray-700 via-slate-700 to-blue-700 rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center backface-hidden rotate-y-180 border border-gray-300">
+                <div className="text-body-small text-gray-100 font-semibold mb-4 px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm">
                   {currentCard.category}
                 </div>
                 <p className="text-white text-center leading-relaxed text-body-large mb-6">
                   {currentCard.definition}
                 </p>
-                <div className="text-body-small text-blue-200">
-                  Card <span className="font-semibold text-white">{currentCardIndex + 1}</span> of <span className="font-semibold text-blue-100">{flashcards.length}</span>
+                <div className="text-body-small text-gray-200">
+                  Card <span className="font-semibold text-white">{currentCardIndex + 1}</span> of <span className="font-semibold text-gray-100">{flashcards.length}</span>
                 </div>
               </div>
             </div>
@@ -235,21 +235,21 @@ export default function FlashcardsPageClient() {
           <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Flashcard Features</h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">🃏</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Interactive Cards</h4>
               <p className="text-body text-gray-600 leading-relaxed">Flip cards to reveal definitions and test your knowledge</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">📊</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Progress Tracking</h4>
               <p className="text-body text-gray-600 leading-relaxed">Track which terms you've mastered and monitor your progress</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">⌨️</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Keyboard Shortcuts</h4>

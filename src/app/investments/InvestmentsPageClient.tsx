@@ -2,6 +2,52 @@
 
 import { useState } from 'react';
 
+// Indian number formatting function
+const formatIndianNumber = (num: number): string => {
+  if (num < 1000) {
+    return num.toString();
+  }
+  
+  const numStr = Math.round(num).toString();
+  const len = numStr.length;
+  
+  if (len <= 3) {
+    return numStr;
+  } else if (len <= 5) {
+    // Thousands (1,000 to 99,999)
+    return numStr.slice(0, len - 3) + ',' + numStr.slice(len - 3);
+  } else if (len <= 7) {
+    // Lakhs (1,00,000 to 99,99,999)
+    return numStr.slice(0, len - 5) + ',' + numStr.slice(len - 5, len - 3) + ',' + numStr.slice(len - 3);
+  } else {
+    // Crores (1,00,00,000 and above)
+    const crores = Math.floor(num / 10000000);
+    const remainder = num % 10000000;
+    
+    if (remainder === 0) {
+      return crores + ' crore' + (crores > 1 ? 's' : '');
+    } else if (remainder < 100000) {
+      const thousands = Math.floor(remainder / 1000);
+      if (thousands === 0) {
+        return crores + ' crore' + (crores > 1 ? 's' : '');
+      } else {
+        return crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + formatIndianNumber(remainder);
+      }
+    } else {
+      const lakhs = Math.floor(remainder / 100000);
+      const remainingAfterLakhs = remainder % 100000;
+      
+      let result = crores + ' crore' + (crores > 1 ? 's' : '') + ' ' + lakhs + ' lakh' + (lakhs > 1 ? 's' : '');
+      
+      if (remainingAfterLakhs > 0) {
+        result += ' ' + formatIndianNumber(remainingAfterLakhs);
+      }
+      
+      return result;
+    }
+  }
+};
+
 interface InvestmentType {
   id: string;
   name: string;
@@ -369,7 +415,7 @@ export default function InvestmentsPageClient() {
                             />
                             <div className="flex justify-between text-body-small text-gray-600 mt-2">
                               <span className="font-semibold">{item.percentage}%</span>
-                              <span className="font-semibold">₹{item.amount.toLocaleString()}</span>
+                              <span className="font-semibold">₹{formatIndianNumber(item.amount)}</span>
                             </div>
                           </div>
                         </div>
@@ -411,7 +457,7 @@ export default function InvestmentsPageClient() {
                       
                       <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl">
                         <span className="text-body font-semibold">Total Value:</span>
-                        <span className="text-body-large font-bold text-orange-600">₹{totalAmount.toLocaleString()}</span>
+                        <span className="text-body-large font-bold text-orange-600">₹{formatIndianNumber(totalAmount)}</span>
                       </div>
                     </div>
 
