@@ -14,6 +14,43 @@ CREATE TABLE IF NOT EXISTS financial_terms (
 CREATE INDEX IF NOT EXISTS idx_financial_terms_term ON financial_terms(term);
 CREATE INDEX IF NOT EXISTS idx_financial_terms_category ON financial_terms(category);
 
+-- Create the user_profiles table
+CREATE TABLE IF NOT EXISTS user_profiles (
+  id SERIAL PRIMARY KEY,
+  user_id VARCHAR(255) UNIQUE NOT NULL, -- Google OAuth user ID
+  email VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  avatar_url TEXT,
+  
+  -- Basic Information
+  age INTEGER,
+  city VARCHAR(100),
+  state VARCHAR(100),
+  
+  -- Financial Background
+  education_level VARCHAR(50) CHECK (education_level IN ('high_school', 'college', 'working_professional', 'other')),
+  monthly_income_range VARCHAR(50) CHECK (monthly_income_range IN ('0-1000', '1001-5000', '5001-10000', '10000+', 'prefer_not_say')),
+  financial_knowledge_level VARCHAR(50) CHECK (financial_knowledge_level IN ('beginner', 'intermediate', 'advanced')),
+  
+  -- Goals & Interests
+  primary_financial_goals TEXT[], -- Array of goals like ['save_for_education', 'emergency_fund', 'investments']
+  preferred_learning_style VARCHAR(50) CHECK (preferred_learning_style IN ('visual', 'interactive', 'reading', 'video')),
+  favorite_financial_topic VARCHAR(100),
+  
+  -- Optional Personal Touch
+  bio TEXT,
+  
+  -- Timestamps
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create indexes for user_profiles
+CREATE INDEX IF NOT EXISTS idx_user_profiles_user_id ON user_profiles(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_email ON user_profiles(email);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_education_level ON user_profiles(education_level);
+CREATE INDEX IF NOT EXISTS idx_user_profiles_financial_knowledge_level ON user_profiles(financial_knowledge_level);
+
 -- Insert the existing financial terms data
 INSERT INTO financial_terms (term, definition, category, example, related_terms) VALUES
 ('Compound Interest', 'Interest earned on both the principal amount and any previously earned interest. It''s often called ''interest on interest'' and helps money grow faster over time.', 'Investing', 'If you invest ₹1,000 at 5% compound interest, after 10 years you''ll have ₹1,628.89 instead of ₹1,500 with simple interest.', ARRAY['Simple Interest', 'APY', 'Time Value of Money']),
@@ -51,8 +88,13 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create a trigger to automatically update the updated_at column
+-- Create triggers to automatically update the updated_at column
 CREATE TRIGGER update_financial_terms_updated_at 
     BEFORE UPDATE ON financial_terms 
+    FOR EACH ROW 
+    EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_user_profiles_updated_at 
+    BEFORE UPDATE ON user_profiles 
     FOR EACH ROW 
     EXECUTE FUNCTION update_updated_at_column(); 

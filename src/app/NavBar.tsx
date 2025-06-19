@@ -217,6 +217,16 @@ export default function NavBar() {
                         </span>
                       )}
                     </div>
+                    <Link
+                      href="/profile"
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span>My Profile</span>
+                    </Link>
                     <button
                       onClick={handleSignOut}
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
@@ -292,6 +302,21 @@ export default function NavBar() {
                     <span>{calc.label}</span>
                   </Link>
                 ))}
+              </div>
+              
+              <div className="pt-2 border-t border-gray-100">
+                <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</p>
+                <Link
+                  href="/profile"
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-md text-base font-semibold transition-all duration-200 ${
+                    pathname === '/profile' 
+                      ? "bg-gradient-to-r from-gray-700 to-slate-700 text-white shadow-md" 
+                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                  }`}
+                >
+                  <span>👤</span>
+                  <span>My Profile</span>
+                </Link>
               </div>
               
               {isAdmin && (
