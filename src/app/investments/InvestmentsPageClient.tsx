@@ -31,7 +31,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'High',
     potentialReturn: 'High',
     liquidity: 'High',
-    minimumInvestment: '$1 - $100',
+    minimumInvestment: '₹1 - ₹100',
     pros: ['High potential returns', 'Ownership in companies', 'Dividend income', 'Easy to buy/sell'],
     cons: ['High volatility', 'Can lose value quickly', 'Requires research', 'Market timing risk'],
     example: 'Buying shares of Apple, Tesla, or Google',
@@ -45,7 +45,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'Low',
     potentialReturn: 'Low',
     liquidity: 'Medium',
-    minimumInvestment: '$1,000',
+    minimumInvestment: '₹1,000',
     pros: ['Steady income', 'Lower risk', 'Predictable returns', 'Government backing (some)'],
     cons: ['Lower returns', 'Interest rate risk', 'Inflation risk', 'Limited growth potential'],
     example: 'US Treasury bonds, corporate bonds, municipal bonds',
@@ -59,7 +59,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'Medium',
     potentialReturn: 'Medium',
     liquidity: 'High',
-    minimumInvestment: '$500 - $3,000',
+    minimumInvestment: '₹500 - ₹3,000',
     pros: ['Diversification', 'Professional management', 'Access to many investments', 'Lower minimums'],
     cons: ['Management fees', 'Less control', 'Tax inefficiency', 'Trading restrictions'],
     example: 'Vanguard 500 Index Fund, Fidelity Growth Fund',
@@ -73,7 +73,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'Medium',
     potentialReturn: 'Medium',
     liquidity: 'High',
-    minimumInvestment: '$1 - $100',
+    minimumInvestment: '₹1 - ₹100',
     pros: ['Low costs', 'Diversification', 'Tax efficient', 'Trade like stocks'],
     cons: ['Trading fees', 'Market volatility', 'Tracking error', 'Limited customization'],
     example: 'SPY (S&P 500), QQQ (NASDAQ), VTI (Total Market)',
@@ -87,7 +87,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'Medium',
     potentialReturn: 'Medium',
     liquidity: 'Low',
-    minimumInvestment: '$10,000+',
+    minimumInvestment: '₹10,000+',
     pros: ['Tangible asset', 'Rental income', 'Tax benefits', 'Appreciation potential'],
     cons: ['High initial cost', 'Illiquid', 'Maintenance costs', 'Market dependent'],
     example: 'Rental properties, REITs, real estate crowdfunding',
@@ -101,7 +101,7 @@ const investmentTypes: InvestmentType[] = [
     riskLevel: 'High',
     potentialReturn: 'High',
     liquidity: 'Medium',
-    minimumInvestment: '$100 - $1,000',
+    minimumInvestment: '₹100 - ₹1,000',
     pros: ['Inflation hedge', 'Portfolio diversification', 'Tangible assets', 'Global demand'],
     cons: ['High volatility', 'Storage costs', 'No income generation', 'Complex pricing'],
     example: 'Gold, silver, oil, agricultural futures',
@@ -367,7 +367,7 @@ export default function InvestmentsPageClient() {
                             />
                             <div className="flex justify-between text-sm text-gray-600 mt-1">
                               <span>{item.percentage}%</span>
-                              <span>${item.amount.toLocaleString()}</span>
+                              <span>₹{item.amount.toLocaleString()}</span>
                             </div>
                           </div>
                         </div>
@@ -443,7 +443,7 @@ export default function InvestmentsPageClient() {
                       
                       <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                         <span className="font-medium">Total Value:</span>
-                        <span className="font-bold text-lg">${totalAmount.toLocaleString()}</span>
+                        <span className="font-bold text-lg">₹{totalAmount.toLocaleString()}</span>
                       </div>
                     </div>
 
