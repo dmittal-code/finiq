@@ -25,7 +25,7 @@ export default function AuthCallbackPageClient() {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
       <div className="bg-white rounded-xl shadow-lg p-8 text-center">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Signing you in...</h1>
         {error ? (

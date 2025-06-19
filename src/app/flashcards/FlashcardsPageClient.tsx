@@ -98,7 +98,7 @@ export default function FlashcardsPageClient() {
   }, [currentCardIndex, isFlipped, handleNext, handleFlip]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -145,7 +145,7 @@ export default function FlashcardsPageClient() {
                 </div>
               </div>
               {/* Back of card */}
-              <div className="absolute w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center border-2 border-blue-400 backface-hidden rotate-y-180">
+              <div className="absolute w-full h-full bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center border-2 border-green-400 backface-hidden rotate-y-180">
                 <div className="text-sm text-blue-100 font-medium mb-2">
                   {currentCard.category}
                 </div>
@@ -169,7 +169,7 @@ export default function FlashcardsPageClient() {
           </button>
           <button
             onClick={handleFlip}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
             {isFlipped ? 'Show Term' : 'Show Definition'}
           </button>
@@ -177,28 +177,28 @@ export default function FlashcardsPageClient() {
             onClick={handleNext}
             className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            Next →
+            Next Card
           </button>
         </div>
         {/* Additional Controls */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           <button
             onClick={handleShuffle}
-            className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            🔀 Shuffle Cards
+            Shuffle
           </button>
           <button
             onClick={handleReset}
-            className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            🔄 Reset Progress
+            Reset Progress
           </button>
           <button
             onClick={() => setShowProgress(!showProgress)}
-            className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            📊 {showProgress ? 'Hide' : 'Show'} Progress
+            {showProgress ? 'Hide Progress' : 'Show Progress'}
           </button>
         </div>
         {/* Progress Details */}

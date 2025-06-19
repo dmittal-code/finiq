@@ -59,7 +59,7 @@ export default function AddTermPageClient() {
 
   return (
     <ProtectedRoute requireAdmin>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
@@ -177,7 +177,7 @@ export default function AddTermPageClient() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Adding...' : 'Add Term'}
                   </button>
@@ -187,9 +187,9 @@ export default function AddTermPageClient() {
           </div>
 
           {/* Tips */}
-          <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-blue-800 mb-3">💡 Tips for Adding Terms</h3>
-            <ul className="space-y-2 text-sm text-blue-700">
+          <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-green-800 mb-3">💡 Tips for Adding Terms</h3>
+            <ul className="space-y-2 text-sm text-green-700">
               <li>• Keep definitions clear and easy to understand for teens</li>
               <li>• Use simple language and avoid jargon when possible</li>
               <li>• Provide practical examples that relate to everyday life</li>

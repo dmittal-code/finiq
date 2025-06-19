@@ -152,8 +152,8 @@ export default function SavingsGoalPageClient() {
                   <div className="text-2xl font-bold text-green-600">₹{currentSavings.toLocaleString()}</div>
                   <div className="text-sm text-gray-600">Current Savings</div>
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">₹{(goalAmount - currentSavings).toLocaleString()}</div>
+                <div className="p-4 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">₹{(goalAmount - currentSavings).toLocaleString()}</div>
                   <div className="text-sm text-gray-600">Remaining</div>
                 </div>
               </div>

@@ -144,7 +144,7 @@ export default function QuizzesPageClient() {
     const currentQuestion = quizState.currentQuiz.questions[quizState.currentQuestionIndex];
     const isAnswered = quizState.selectedAnswers[quizState.currentQuestionIndex] !== -1;
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
@@ -166,7 +166,7 @@ export default function QuizzesPageClient() {
             {/* Progress Bar */}
             <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
               <div 
-                className="bg-gradient-to-r from-purple-400 to-indigo-500 h-3 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full transition-all duration-300"
                 style={{ width: `${((quizState.currentQuestionIndex + 1) / quizState.currentQuiz.questions.length) * 100}%` }}
               ></div>
             </div>
@@ -184,8 +184,8 @@ export default function QuizzesPageClient() {
                   onClick={() => selectAnswer(index)}
                   className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 ${
                     quizState.selectedAnswers[quizState.currentQuestionIndex] === index
-                      ? 'border-purple-500 bg-purple-50 text-purple-800'
-                      : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+                      ? 'border-green-500 bg-green-50 text-green-800'
+                      : 'border-gray-200 hover:border-green-300 hover:bg-green-50'
                   }`}
                 >
                   <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
@@ -206,7 +206,7 @@ export default function QuizzesPageClient() {
               <button
                 onClick={previousQuestion}
                 disabled={quizState.currentQuestionIndex === 0}
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 ← Previous
               </button>
@@ -228,7 +228,7 @@ export default function QuizzesPageClient() {
     const score = calculateScore();
     const scoreMessage = getScoreMessage(score.percentage);
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Results Header */}
           <div className="text-center mb-8">
@@ -238,7 +238,7 @@ export default function QuizzesPageClient() {
             <h2 className="text-xl text-gray-600 mb-6">{quizState.currentQuiz.title}</h2>
             {/* Score Display */}
             <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <div className="text-6xl font-bold text-purple-600 mb-4">
+              <div className="text-6xl font-bold text-green-600 mb-4">
                 {score.percentage}%
               </div>
               <div className={`text-xl font-semibold mb-4 ${scoreMessage.color}`}>
@@ -300,7 +300,7 @@ export default function QuizzesPageClient() {
           <div className="flex justify-center gap-4">
             <button
               onClick={resetQuiz}
-              className="px-8 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+              className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
             >
               Take Another Quiz
             </button>
@@ -312,7 +312,7 @@ export default function QuizzesPageClient() {
 
   // Quiz Selection Screen
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -332,19 +332,19 @@ export default function QuizzesPageClient() {
                 <p className="text-gray-600 mb-6">{quiz.description}</p>
                 <div className="flex justify-center items-center gap-6 mb-6 text-sm text-gray-500">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                     {quiz.questions.length} Questions
                   </div>
                   {quiz.timeLimit && (
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                       {quiz.timeLimit} Minutes
                     </div>
                   )}
                 </div>
                 <button
                   onClick={() => startQuiz(quiz)}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 font-semibold"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-semibold"
                 >
                   Start Quiz
                 </button>
@@ -357,14 +357,14 @@ export default function QuizzesPageClient() {
           <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">Quiz Features</h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-2xl">📊</span>
               </div>
               <h4 className="font-semibold text-gray-800 mb-2">Detailed Results</h4>
               <p className="text-gray-600 text-sm">Get explanations for every question and track your progress</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-2xl">⏱️</span>
               </div>
               <h4 className="font-semibold text-gray-800 mb-2">Timed Quizzes</h4>

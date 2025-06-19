@@ -49,7 +49,7 @@ export default function AdminTermsPageClient() {
 
   return (
     <ProtectedRoute requireAdmin>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
@@ -61,7 +61,7 @@ export default function AdminTermsPageClient() {
             </p>
             <button
               onClick={() => router.push('/admin/terms/add')}
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
             >
               + Add New Term
             </button>

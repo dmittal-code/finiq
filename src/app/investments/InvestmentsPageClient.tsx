@@ -172,7 +172,7 @@ export default function InvestmentsPageClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -189,8 +189,8 @@ export default function InvestmentsPageClient() {
               onClick={() => setShowPortfolioBuilder(false)}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                 !showPortfolioBuilder
-                  ? 'bg-indigo-500 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-indigo-50 border border-gray-200'
+                  ? 'bg-green-500 text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
               }`}
             >
               📊 Investment Types
@@ -199,11 +199,11 @@ export default function InvestmentsPageClient() {
               onClick={() => setShowPortfolioBuilder(true)}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                 showPortfolioBuilder
-                  ? 'bg-indigo-500 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-indigo-50 border border-gray-200'
+                  ? 'bg-green-500 text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
               }`}
             >
-              🎯 Portfolio Builder
+              �� Portfolio Builder
             </button>
           </div>
         </div>
@@ -217,13 +217,13 @@ export default function InvestmentsPageClient() {
                 <div
                   key={investment.id}
                   onClick={() => handleInvestmentClick(investment)}
-                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-indigo-200 group"
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-green-200 group"
                 >
                   {/* Header */}
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-4xl">{investment.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">
+                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
                         {investment.name}
                       </h3>
                       <p className="text-sm text-gray-500">{investment.minimumInvestment} min</p>
@@ -259,8 +259,8 @@ export default function InvestmentsPageClient() {
 
                   {/* Action Button */}
                   <div className="flex items-center justify-between">
-                    <span className="text-indigo-600 text-sm font-medium">Learn more</span>
-                    <svg className="w-4 h-4 text-indigo-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="text-green-600 text-sm font-medium">Learn more</span>
+                    <svg className="w-4 h-4 text-green-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -283,7 +283,7 @@ export default function InvestmentsPageClient() {
                       style={{ left: `${x}%`, top: `${y}%` }}
                       onClick={() => handleInvestmentClick(investment)}
                     >
-                      <div className="bg-white rounded-full p-2 shadow-lg border-2 border-indigo-200 hover:border-indigo-400">
+                      <div className="bg-white rounded-full p-2 shadow-lg border-2 border-green-200 hover:border-green-400">
                         <span className="text-lg">{investment.icon}</span>
                       </div>
                       <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white px-2 py-1 rounded text-xs font-medium shadow-lg whitespace-nowrap">
@@ -318,7 +318,7 @@ export default function InvestmentsPageClient() {
                     type="number"
                     value={totalAmount}
                     onChange={(e) => setTotalAmount(Number(e.target.value))}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
                     placeholder="Enter amount"
                   />
                 </div>
@@ -331,7 +331,7 @@ export default function InvestmentsPageClient() {
                       <button
                         key={investment.id}
                         onClick={() => addToPortfolio(investment)}
-                        className="flex items-center gap-2 p-3 border border-gray-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 transition-colors"
+                        className="flex items-center gap-2 p-3 border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors"
                       >
                         <span className="text-lg">{investment.icon}</span>
                         <span className="text-sm font-medium">{investment.name}</span>
@@ -541,7 +541,7 @@ export default function InvestmentsPageClient() {
                 {/* Example */}
                 <div className="mb-6">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Example</h4>
-                  <div className="bg-indigo-50 border-l-4 border-indigo-400 p-4 rounded-r-lg">
+                  <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-r-lg">
                     <p className="text-gray-700 italic">{selectedInvestment.example}</p>
                   </div>
                 </div>
@@ -554,7 +554,7 @@ export default function InvestmentsPageClient() {
                       setShowPortfolioBuilder(true);
                       closeModal();
                     }}
-                    className="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+                    className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                   >
                     Add to Portfolio
                   </button>

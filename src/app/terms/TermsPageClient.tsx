@@ -55,7 +55,7 @@ export default function TermsPageClient() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-4 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto mb-4"></div>
             <p className="text-gray-600">Loading financial terms...</p>
@@ -68,7 +68,7 @@ export default function TermsPageClient() {
   if (error) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-4 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4 flex items-center justify-center">
           <div className="text-center">
             <div className="w-24 h-24 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
               <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +91,7 @@ export default function TermsPageClient() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -207,14 +207,14 @@ export default function TermsPageClient() {
                 <p className="text-gray-600 text-sm">Find terms by name or definition with instant search results</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl">📂</span>
                 </div>
                 <h4 className="font-semibold text-gray-800 mb-2">Category Filter</h4>
                 <p className="text-gray-600 text-sm">Browse terms by category to focus on specific topics</p>
               </div>
               <div className="text-center">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl">💡</span>
                 </div>
                 <h4 className="font-semibold text-gray-800 mb-2">Detailed Explanations</h4>
