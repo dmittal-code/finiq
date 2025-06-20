@@ -1,390 +1,335 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-interface Question {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
-
-interface Quiz {
-  id: string;
-  title: string;
-  description: string;
-  questions: Question[];
-  timeLimit?: number; // in minutes
-}
-
-const quizzes: Quiz[] = [
-  // ... (copy the quizzes array from page.tsx) ...
-];
-
-interface QuizState {
-  currentQuiz: Quiz | null;
-  currentQuestionIndex: number;
-  selectedAnswers: number[];
-  showResults: boolean;
-  timeRemaining: number;
-  isTimerRunning: boolean;
-}
+import { useRouter } from 'next/navigation';
+import { getQuizzes, Quiz } from '../../lib/quizzes';
+import { supabase } from '../../supabaseClient';
 
 export default function QuizzesPageClient() {
-  const [quizState, setQuizState] = useState<QuizState>({
-    currentQuiz: null,
-    currentQuestionIndex: 0,
-    selectedAnswers: [],
-    showResults: false,
-    timeRemaining: 0,
-    isTimerRunning: false
-  });
+  const router = useRouter();
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load quizzes from database
+  useEffect(() => {
+    async function loadQuizzes() {
+      try {
+        console.log('Loading quizzes from database...');
+        setLoading(true);
+        const data = await getQuizzes();
+        console.log('Quizzes loaded:', data.length, 'quizzes found');
+        console.log('Quiz data sample:', data[0]);
+        setQuizzes(data);
+        
+        // If we have quizzes but they might not have questions, warn the user
+        if (data.length > 0 && data.length < 5) {
+          console.warn('Only', data.length, 'quizzes found. Expected 15 quizzes if database is fully set up.');
+        }
+      } catch (err) {
+        console.error('Error loading quizzes:', err);
+        setError('Failed to load quizzes. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadQuizzes();
+  }, []);
+
+  // Debug: Check if we have any quizzes loaded
+  useEffect(() => {
+    console.log('Quiz state updated:', { 
+      quizzesCount: quizzes.length
+    });
+  }, [quizzes]);
+
+  // Diagnostic function to check database state
+  const runDatabaseDiagnostic = async () => {
+    console.log('🔍 Running database diagnostic...');
+    try {
+      // Check questions table
+      const { data: questions, error: questionsError } = await supabase
+        .from('questions')
+        .select('*')
+        .limit(5);
+      
+      console.log('Questions table:', { 
+        count: questions?.length || 0, 
+        error: questionsError,
+        sample: questions?.[0]
+      });
+
+      // Check question_options table
+      const { data: options, error: optionsError } = await supabase
+        .from('question_options')
+        .select('*')
+        .limit(5);
+      
+      console.log('Question options table:', { 
+        count: options?.length || 0, 
+        error: optionsError,
+        sample: options?.[0]
+      });
+
+      // Check quiz_questions junction table
+      const { data: quizQuestions, error: quizQuestionsError } = await supabase
+        .from('quiz_questions')
+        .select('*')
+        .limit(5);
+      
+      console.log('Quiz questions junction table:', { 
+        count: quizQuestions?.length || 0, 
+        error: quizQuestionsError,
+        sample: quizQuestions?.[0]
+      });
+
+      // Test the specific query that getQuizWithQuestions uses
+      const testQuizId = quizzes[0]?.id;
+      if (testQuizId) {
+        const { data: testQuizQuestions, error: testError } = await supabase
+          .from('quiz_questions')
+          .select(`
+            question_order,
+            questions (
+              id,
+              question_text,
+              question_type,
+              category,
+              difficulty,
+              explanation
+            )
+          `)
+          .eq('quiz_id', testQuizId)
+          .order('question_order');
+
+        console.log('Test quiz questions query for quiz', testQuizId, ':', {
+          data: testQuizQuestions,
+          error: testError
+        });
+      }
+
+    } catch (err) {
+      console.error('Diagnostic error:', err);
+    }
+  };
 
   const startQuiz = (quiz: Quiz) => {
-    setQuizState({
-      currentQuiz: quiz,
-      currentQuestionIndex: 0,
-      selectedAnswers: new Array(quiz.questions.length).fill(-1),
-      showResults: false,
-      timeRemaining: (quiz.timeLimit || 0) * 60,
-      isTimerRunning: true
-    });
+    console.log('Navigating to quiz:', quiz.title, 'ID:', quiz.id);
+    router.push(`/quizzes/${quiz.id}`);
   };
 
-  const selectAnswer = (answerIndex: number) => {
-    if (!quizState.currentQuiz) return;
-    const newSelectedAnswers = [...quizState.selectedAnswers];
-    newSelectedAnswers[quizState.currentQuestionIndex] = answerIndex;
-    setQuizState(prev => ({
-      ...prev,
-      selectedAnswers: newSelectedAnswers
-    }));
-  };
-
-  const nextQuestion = () => {
-    if (!quizState.currentQuiz) return;
-    if (quizState.currentQuestionIndex < quizState.currentQuiz.questions.length - 1) {
-      setQuizState(prev => ({
-        ...prev,
-        currentQuestionIndex: prev.currentQuestionIndex + 1
-      }));
-    } else {
-      setQuizState(prev => ({
-        ...prev,
-        showResults: true,
-        isTimerRunning: false
-      }));
-    }
-  };
-
-  const previousQuestion = () => {
-    if (quizState.currentQuestionIndex > 0) {
-      setQuizState(prev => ({
-        ...prev,
-        currentQuestionIndex: prev.currentQuestionIndex - 1
-      }));
-    }
-  };
-
-  const resetQuiz = () => {
-    setQuizState({
-      currentQuiz: null,
-      currentQuestionIndex: 0,
-      selectedAnswers: [],
-      showResults: false,
-      timeRemaining: 0,
-      isTimerRunning: false
-    });
-  };
-
-  const calculateScore = () => {
-    if (!quizState.currentQuiz) return { correct: 0, total: 0, percentage: 0 };
-    let correct = 0;
-    quizState.currentQuiz.questions.forEach((question, index) => {
-      if (quizState.selectedAnswers[index] === question.correctAnswer) {
-        correct++;
-      }
-    });
-    const total = quizState.currentQuiz.questions.length;
-    const percentage = Math.round((correct / total) * 100);
-    return { correct, total, percentage };
-  };
-
-  const getScoreMessage = (percentage: number) => {
-    if (percentage >= 90) return { message: 'Excellent! You\'re a financial expert!', color: 'text-green-600', icon: '🏆' };
-    if (percentage >= 80) return { message: 'Great job! You have strong financial knowledge!', color: 'text-green-500', icon: '🎉' };
-    if (percentage >= 70) return { message: 'Good work! You understand the basics well!', color: 'text-blue-500', icon: '👍' };
-    if (percentage >= 60) return { message: 'Not bad! Keep learning to improve!', color: 'text-yellow-600', icon: '📚' };
-    return { message: 'Keep studying! Financial literacy is a journey!', color: 'text-red-500', icon: '💪' };
-  };
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (quizState.isTimerRunning && quizState.timeRemaining > 0) {
-      interval = setInterval(() => {
-        setQuizState(prev => {
-          if (prev.timeRemaining <= 1) {
-            return { ...prev, showResults: true, isTimerRunning: false };
-          }
-          return { ...prev, timeRemaining: prev.timeRemaining - 1 };
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [quizState.isTimerRunning, quizState.timeRemaining]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  if (quizState.currentQuiz && !quizState.showResults) {
-    const currentQuestion = quizState.currentQuiz.questions[quizState.currentQuestionIndex];
-    const isAnswered = quizState.selectedAnswers[quizState.currentQuestionIndex] !== -1;
+  // Loading state
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-heading-1 font-bold text-gray-900 mb-4">
-              {quizState.currentQuiz.title}
-            </h1>
-            <p className="text-body-large text-gray-600 mb-6">{quizState.currentQuiz.description}</p>
-            {/* Progress and Timer */}
-            <div className="flex justify-between items-center mb-6">
-              <div className="text-body text-gray-600">
-                Question <span className="font-semibold text-blue-600">{quizState.currentQuestionIndex + 1}</span> of <span className="font-semibold text-gray-800">{quizState.currentQuiz.questions.length}</span>
-              </div>
-              {quizState.currentQuiz.timeLimit && (
-                <div className="text-body font-medium text-gray-700 bg-white/80 px-4 py-2 rounded-xl shadow-sm">
-                  ⏱️ Time: {formatTime(quizState.timeRemaining)}
-                </div>
-              )}
-            </div>
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-3 mb-8">
-              <div 
-                className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 shadow-sm"
-                style={{ width: `${((quizState.currentQuestionIndex + 1) / quizState.currentQuiz.questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-          {/* Question */}
-          <div className="card p-8 mb-8 animate-scale-in">
-            <h2 className="text-heading-2 font-semibold text-gray-900 mb-8 leading-relaxed">
-              {currentQuestion.question}
-            </h2>
-            {/* Options */}
-            <div className="space-y-4">
-              {currentQuestion.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => selectAnswer(index)}
-                  className={`w-full p-6 text-left rounded-xl border-2 transition-all duration-300 transform hover:scale-[1.02] ${
-                    quizState.selectedAnswers[quizState.currentQuestionIndex] === index
-                      ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 text-blue-800 shadow-lg'
-                      : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
-                  }`}
-                >
-                  <span className="font-semibold mr-4 text-lg">{String.fromCharCode(65 + index)}.</span>
-                  <span className="text-body leading-relaxed">{option}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-          {/* Navigation */}
-          <div className="flex justify-between items-center">
-            <button
-              onClick={resetQuiz}
-              className="btn-secondary"
-            >
-              🚪 Exit Quiz
-            </button>
-            <div className="flex gap-4">
-              <button
-                onClick={previousQuestion}
-                disabled={quizState.currentQuestionIndex === 0}
-                className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                ← Previous
-              </button>
-              <button
-                onClick={nextQuestion}
-                disabled={!isAnswered}
-                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {quizState.currentQuestionIndex === quizState.currentQuiz.questions.length - 1 ? '🎯 Finish' : 'Next →'}
-              </button>
-            </div>
-          </div>
+        <div className="max-w-4xl mx-auto text-center py-20">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-8"></div>
+          <h2 className="text-heading-2 font-semibold text-gray-600">Loading quizzes...</h2>
+          <p className="text-body text-gray-500 mt-4">Fetching available quizzes from database...</p>
         </div>
       </div>
     );
   }
 
-  if (quizState.currentQuiz && quizState.showResults) {
-    const score = calculateScore();
-    const scoreMessage = getScoreMessage(score.percentage);
+  // Error state
+  if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Results Header */}
-          <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-heading-1 font-bold text-gray-900 mb-4">
-              Quiz Results
-            </h1>
-            <h2 className="text-heading-2 text-gray-600 mb-8">{quizState.currentQuiz.title}</h2>
-            {/* Score Display */}
-            <div className="card p-10 mb-8 animate-scale-in">
-              <div className="text-7xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
-                {score.percentage}%
-              </div>
-              <div className={`text-heading-2 font-semibold mb-4 ${scoreMessage.color} flex items-center justify-center gap-3`}>
-                <span>{scoreMessage.icon}</span>
-                {scoreMessage.message}
-              </div>
-              <div className="text-body-large text-gray-600">
-                You got <span className="font-semibold text-blue-600">{score.correct}</span> out of <span className="font-semibold text-gray-800">{score.total}</span> questions correct.
-              </div>
-            </div>
-          </div>
-          {/* Detailed Results */}
-          <div className="card p-8 mb-8 animate-slide-in-left">
-            <h3 className="text-heading-2 font-bold text-gray-900 mb-8">Question Review</h3>
-            <div className="space-y-8">
-              {quizState.currentQuiz.questions.map((question, index) => {
-                const selectedAnswer = quizState.selectedAnswers[index];
-                const isCorrect = selectedAnswer === question.correctAnswer;
-                return (
-                  <div key={index} className="border-l-4 border-gray-200 pl-6 py-4">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shadow-lg ${
-                        isCorrect ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' : 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
-                      }`}>
-                        {isCorrect ? '✓' : '✗'}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-heading-3 font-semibold text-gray-900 mb-4 leading-relaxed">
-                          Question {index + 1}: {question.question}
-                        </p>
-                        <div className="space-y-2 mb-4">
-                          {question.options.map((option, optionIndex) => (
-                            <div
-                              key={optionIndex}
-                              className={`p-4 rounded-xl border-2 ${
-                                optionIndex === question.correctAnswer
-                                  ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 border-green-300'
-                                  : optionIndex === selectedAnswer && !isCorrect
-                                  ? 'bg-gradient-to-r from-red-50 to-pink-50 text-red-800 border-red-300'
-                                  : 'bg-gray-50 text-gray-600 border-gray-200'
-                              }`}
-                            >
-                              <span className="font-semibold mr-3">{String.fromCharCode(65 + optionIndex)}.</span> 
-                              <span className="text-body">{option}</span>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-400 p-4 rounded-r-xl">
-                          <p className="text-body text-blue-800 leading-relaxed">
-                            <strong>Explanation:</strong> {question.explanation}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          {/* Action Buttons */}
-          <div className="flex justify-center gap-6">
-            <button
-              onClick={resetQuiz}
-              className="btn-primary text-lg px-10 py-4"
-            >
-              🎯 Take Another Quiz
-            </button>
-          </div>
+        <div className="max-w-4xl mx-auto text-center py-20">
+          <div className="text-6xl mb-8">❌</div>
+          <h2 className="text-heading-2 font-semibold text-red-600 mb-4">Error Loading Quizzes</h2>
+          <p className="text-body text-gray-600 mb-8">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="btn-primary"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
   }
 
   // Quiz Selection Screen
+  console.log('Rendering quiz selection screen with', quizzes.length, 'quizzes');
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-heading-1 font-bold text-gray-900 mb-6">
             Financial Literacy Quizzes
           </h1>
-          <p className="text-body-large text-gray-600 leading-relaxed">
-            Test your knowledge and track your progress in financial literacy
+          <p className="text-body-large text-gray-600 leading-relaxed mb-8">
+            Test your knowledge and track your progress in financial literacy. Choose from our comprehensive collection of quizzes designed to enhance your financial understanding.
           </p>
-        </div>
-        {/* Quiz Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {quizzes.map((quiz, index) => (
-            <div 
-              key={quiz.id} 
-              className="card p-8 hover:shadow-xl transition-all duration-300 animate-scale-in"
-              style={{ animationDelay: `${index * 150}ms` }}
+          
+          {/* Diagnostic Info */}
+          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+            <p className="text-sm text-blue-800 mb-3">
+              <strong>Status:</strong> {quizzes.length} quizzes loaded from database
+              {quizzes.length === 0 && ' (Database might not be set up)'}
+              {quizzes.length > 0 && quizzes.length < 15 && ' (Partial database setup - expected 15 quizzes)'}
+              {quizzes.length >= 15 && ' (Database fully set up!)'}
+            </p>
+            <button
+              onClick={runDatabaseDiagnostic}
+              className="text-sm bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition-colors"
             >
-              <div className="text-center">
-                <h2 className="text-heading-2 font-bold text-gray-900 mb-4">{quiz.title}</h2>
-                <p className="text-body text-gray-600 mb-8 leading-relaxed">{quiz.description}</p>
-                <div className="flex justify-center items-center gap-8 mb-8 text-body-small text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
-                    {quiz.questions.length} Questions
-                  </div>
-                  {quiz.timeLimit && (
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></span>
-                      {quiz.timeLimit} Minutes
-                    </div>
-                  )}
-                </div>
-                <button
-                  onClick={() => startQuiz(quiz)}
-                  className="w-full btn-primary text-lg py-4"
-                >
-                  🚀 Start Quiz
-                </button>
-              </div>
-            </div>
-          ))}
+              🔍 Run Database Diagnostic (Check Console)
+            </button>
+          </div>
         </div>
+
+        {/* Filter Tabs */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-white rounded-xl p-2 shadow-lg">
+            <div className="flex gap-2">
+              <button className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium">
+                All Quizzes
+              </button>
+              <button className="px-6 py-3 rounded-lg text-gray-600 hover:bg-gray-100 font-medium">
+                Beginner
+              </button>
+              <button className="px-6 py-3 rounded-lg text-gray-600 hover:bg-gray-100 font-medium">
+                Intermediate
+              </button>
+              <button className="px-6 py-3 rounded-lg text-gray-600 hover:bg-gray-100 font-medium">
+                Advanced
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Quiz Cards */}
+        {quizzes.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {quizzes.map((quiz, index) => (
+              <div 
+                key={quiz.id} 
+                className="card p-6 hover:shadow-xl transition-all duration-300 animate-scale-in group cursor-pointer"
+                style={{ animationDelay: `${index * 100}ms` }}
+                onClick={() => startQuiz(quiz)}
+              >
+                <div className="text-center">
+                  <div className="flex justify-center items-center gap-2 mb-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      quiz.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
+                      quiz.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
+                    }`}>
+                      {quiz.difficulty.charAt(0).toUpperCase() + quiz.difficulty.slice(1)}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      Quiz #{quiz.id}
+                    </span>
+                  </div>
+                  
+                  <h2 className="text-heading-3 font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    {quiz.title}
+                  </h2>
+                  
+                  <p className="text-body text-gray-600 mb-6 leading-relaxed line-clamp-3">
+                    {quiz.description}
+                  </p>
+                  
+                  <div className="flex justify-center items-center gap-6 mb-6 text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+                      10 Questions
+                    </div>
+                    {quiz.time_limit && (
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></span>
+                        {quiz.time_limit} Minutes
+                      </div>
+                    )}
+                  </div>
+                  
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      startQuiz(quiz);
+                    }}
+                    className="w-full btn-primary text-lg py-3 group-hover:scale-105 transition-transform"
+                    disabled={loading}
+                  >
+                    {loading ? '⏳ Loading...' : '🚀 Start Quiz'}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-8">📚</div>
+            <h2 className="text-heading-2 font-semibold text-gray-600 mb-4">No Quizzes Available</h2>
+            <p className="text-body text-gray-500 mb-8">
+              It looks like the quiz database hasn't been set up yet. Please run the setup scripts to populate the quizzes.
+            </p>
+            <button
+              onClick={runDatabaseDiagnostic}
+              className="btn-primary"
+            >
+              🔍 Check Database Status
+            </button>
+          </div>
+        )}
+        
         {/* Features */}
         <div className="card p-10 animate-fade-in">
-          <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Quiz Features</h3>
+          <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">What You'll Get</h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">📊</span>
               </div>
               <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Detailed Results</h4>
-              <p className="text-body text-gray-600 leading-relaxed">Get explanations for every question and track your progress</p>
+              <p className="text-body text-gray-600 leading-relaxed">Get explanations for every question and track your progress with comprehensive feedback</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">⏱️</span>
               </div>
-              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Timed Quizzes</h4>
-              <p className="text-body text-gray-600 leading-relaxed">Challenge yourself with time limits to simulate real exam conditions</p>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Timed Challenges</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Challenge yourself with time limits to simulate real-world financial decision making</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 <span className="text-2xl">🎯</span>
               </div>
-              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Multiple Topics</h4>
-              <p className="text-body text-gray-600 leading-relaxed">Cover various financial concepts from basic terms to investment strategies</p>
+              <h4 className="text-heading-3 font-semibold text-gray-900 mb-3">Progressive Learning</h4>
+              <p className="text-body text-gray-600 leading-relaxed">Start with basics and advance through intermediate to expert-level financial concepts</p>
             </div>
           </div>
         </div>
+
+        {/* Categories Overview */}
+        {quizzes.length > 0 && (
+          <div className="mt-16">
+            <h3 className="text-heading-2 font-bold text-gray-900 mb-8 text-center">Quiz Categories</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {['Investing', 'Savings', 'Credit', 'Planning', 'Economics', 'Taxes', 'Retirement'].map((category, index) => (
+                <div 
+                  key={category}
+                  className="bg-white/70 backdrop-blur-sm rounded-xl p-4 text-center hover:bg-white transition-all duration-300"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <div className="text-2xl mb-2">
+                    {category === 'Investing' && '📈'}
+                    {category === 'Savings' && '💰'}
+                    {category === 'Credit' && '💳'}
+                    {category === 'Planning' && '📋'}
+                    {category === 'Economics' && '📊'}
+                    {category === 'Taxes' && '📄'}
+                    {category === 'Retirement' && '🏖️'}
+                  </div>
+                  <p className="text-sm font-medium text-gray-700">{category}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
