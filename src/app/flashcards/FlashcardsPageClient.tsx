@@ -1,73 +1,69 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-
-interface Flashcard {
-  id: number;
-  term: string;
-  definition: string;
-  category: string;
-}
-
-const flashcards: Flashcard[] = [
-  { id: 1, term: 'Compound Interest', definition: 'Interest earned on both the principal amount and any previously earned interest. It&apos;s often called &apos;interest on interest&apos; and helps money grow faster over time.', category: 'Investing' },
-  { id: 2, term: 'Emergency Fund', definition: 'A savings account with 3-6 months of living expenses set aside for unexpected financial emergencies like job loss or medical bills.', category: 'Savings' },
-  { id: 3, term: 'Diversification', definition: 'Spreading investments across different assets, sectors, or geographic regions to reduce risk. The saying goes: &apos;Don&apos;t put all your eggs in one basket.&apos;', category: 'Investing' },
-  { id: 4, term: 'Credit Score', definition: 'A three-digit number (300-850) that represents your creditworthiness. Higher scores help you get better loan terms and lower interest rates.', category: 'Credit' },
-  { id: 5, term: 'Budget', definition: 'A financial plan that tracks income and expenses to help you spend within your means and save for goals.', category: 'Planning' },
-  { id: 6, term: 'Inflation', definition: 'The rate at which prices for goods and services increase over time, reducing the purchasing power of money.', category: 'Economics' },
-  { id: 7, term: 'Mutual Fund', definition: 'An investment vehicle that pools money from many investors to buy a diversified portfolio of stocks, bonds, or other securities.', category: 'Investing' },
-  { id: 8, term: 'Net Worth', definition: 'The difference between your total assets (what you own) and total liabilities (what you owe). It&apos;s a measure of your financial health.', category: 'Planning' },
-  { id: 9, term: 'ROI (Return on Investment)', definition: 'A measure of the profitability of an investment, calculated as (Gain - Cost) / Cost × 100. Shows how much money you made relative to what you invested.', category: 'Investing' },
-  { id: 10, term: 'Liquidity', definition: 'How easily an asset can be converted to cash without losing value. Cash is the most liquid asset, while real estate is less liquid.', category: 'Investing' },
-  { id: 11, term: 'Debt-to-Income Ratio', definition: 'A percentage that compares your monthly debt payments to your monthly income. Lenders use this to assess your ability to take on new debt.', category: 'Credit' },
-  { id: 12, term: 'Tax Deduction', definition: 'An expense that can be subtracted from your taxable income, reducing the amount of tax you owe. Examples include student loan interest and charitable donations.', category: 'Taxes' },
-  { id: 13, term: 'Asset Allocation', definition: 'The distribution of investments across different asset classes (stocks, bonds, cash, real estate) based on your goals, time horizon, and risk tolerance.', category: 'Investing' },
-  { id: 14, term: 'APR (Annual Percentage Rate)', definition: 'The yearly interest rate charged on loans or credit cards, including fees. It helps you compare the true cost of borrowing money.', category: 'Credit' },
-  { id: 15, term: 'Capital Gains', definition: 'Profits earned from selling an investment or asset for more than you paid for it. These may be subject to capital gains tax.', category: 'Investing' },
-  { id: 16, term: '401(k)', definition: 'A retirement savings plan offered by employers where you can contribute pre-tax money, often with employer matching contributions.', category: 'Retirement' },
-  { id: 17, term: 'Index Fund', definition: 'A type of mutual fund that tracks a specific market index (like the S&P 500), providing broad market exposure at low costs.', category: 'Investing' },
-  { id: 18, term: 'Amortization', definition: 'The process of paying off a loan through regular payments that include both principal and interest. Early payments are mostly interest, later payments are mostly principal.', category: 'Credit' },
-  { id: 19, term: 'Risk Tolerance', definition: 'Your ability and willingness to lose some or all of your original investment in exchange for greater potential returns. It affects your investment strategy.', category: 'Investing' },
-  { id: 20, term: 'Time Value of Money', definition: 'The concept that money available today is worth more than the same amount in the future due to its potential earning capacity through interest or investment returns.', category: 'Economics' },
-];
+import { getFlashcards, type Flashcard } from '../../lib/flashcards';
 
 export default function FlashcardsPageClient() {
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
   const [completedCards, setCompletedCards] = useState<Set<number>>(new Set());
 
-  const currentCard = flashcards[currentCardIndex];
-  const progress = (completedCards.size / flashcards.length) * 100;
+  // Fetch flashcards from database
+  useEffect(() => {
+    async function fetchFlashcards() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getFlashcards();
+        setFlashcards(data);
+      } catch (err) {
+        console.error('Error fetching flashcards:', err);
+        setError('Failed to load flashcards. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFlashcards();
+  }, []);
+
+  // Get current card safely
+  const currentCard = flashcards.length > 0 ? flashcards[currentCardIndex] : null;
+  const progress = flashcards.length > 0 ? (completedCards.size / flashcards.length) * 100 : 0;
 
   const handleNext = useCallback(() => {
-    setCompletedCards(prev => new Set([...prev, currentCard.id]));
-    setIsFlipped(false);
-    setCurrentCardIndex((prev) => (prev + 1) % flashcards.length);
-  }, [currentCard.id]);
+    if (currentCard) {
+      setCompletedCards(prev => new Set([...prev, currentCard.id]));
+      setIsFlipped(false);
+      setCurrentCardIndex((prev) => (prev + 1) % flashcards.length);
+    }
+  }, [currentCard, flashcards.length]);
 
   const handlePrevious = useCallback(() => {
     setIsFlipped(false);
     setCurrentCardIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
-  }, []);
+  }, [flashcards.length]);
 
   const handleFlip = useCallback(() => {
     setIsFlipped(!isFlipped);
   }, [isFlipped]);
 
-  const handleShuffle = () => {
+  const handleShuffle = useCallback(() => {
     setIsFlipped(false);
     const shuffled = [...flashcards].sort(() => Math.random() - 0.5);
-    flashcards.splice(0, flashcards.length, ...shuffled);
+    setFlashcards(shuffled);
     setCurrentCardIndex(0);
-  };
+  }, [flashcards]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setIsFlipped(false);
     setCurrentCardIndex(0);
     setCompletedCards(new Set());
-  };
+  }, []);
 
   useEffect(() => {
     function handleKeyPress(event: KeyboardEvent) {
@@ -95,7 +91,79 @@ export default function FlashcardsPageClient() {
     }
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentCardIndex, isFlipped, handleNext, handleFlip, handlePrevious]);
+  }, [handleNext, handleFlip, handlePrevious, handleReset]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 mx-auto mb-4"></div>
+            <h2 className="text-heading-2 font-semibold text-gray-700">Loading Flashcards...</h2>
+            <p className="text-body text-gray-500 mt-2">Please wait while we fetch your learning materials</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center py-20">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">⚠️</span>
+            </div>
+            <h2 className="text-heading-2 font-semibold text-gray-900 mb-4">Unable to Load Flashcards</h2>
+            <p className="text-body text-gray-600 mb-6">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="btn-primary"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show empty state
+  if (flashcards.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center py-20">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📚</span>
+            </div>
+            <h2 className="text-heading-2 font-semibold text-gray-900 mb-4">No Flashcards Available</h2>
+            <p className="text-body text-gray-600">There are no flashcards available at the moment.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show message if no current card (shouldn't happen, but safety check)
+  if (!currentCard) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center py-20">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">🔄</span>
+            </div>
+            <h2 className="text-heading-2 font-semibold text-gray-900 mb-4">Loading Card...</h2>
+            <p className="text-body text-gray-600">Please wait while we prepare your flashcard.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-blue-50 p-4">
@@ -106,7 +174,7 @@ export default function FlashcardsPageClient() {
             Financial Literacy Flashcards
           </h1>
           <p className="text-body-large text-gray-600 leading-relaxed mb-8">
-            Master 20 essential financial concepts through interactive flashcards
+            Master {flashcards.length} essential financial concepts through interactive flashcards
           </p>
           {/* Progress Bar */}
           <div className="w-full bg-gray-200 rounded-full h-3 mb-4">

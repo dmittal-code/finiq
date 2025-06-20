@@ -269,7 +269,7 @@ export default function ProfilePageClient() {
                 </label>
                 <select
                   value={profile?.education_level || ''}
-                  onChange={(e) => setProfile(prev => prev ? { ...prev, education_level: e.target.value as any } : null)}
+                  onChange={(e) => setProfile(prev => prev ? { ...prev, education_level: e.target.value as 'high_school' | 'college' | 'working_professional' | 'other' } : null)}
                   className="input-enhanced"
                 >
                   <option value="">Select your level</option>
@@ -286,7 +286,7 @@ export default function ProfilePageClient() {
                 </label>
                 <select
                   value={profile?.monthly_income_range || ''}
-                  onChange={(e) => setProfile(prev => prev ? { ...prev, monthly_income_range: e.target.value as any } : null)}
+                  onChange={(e) => setProfile(prev => prev ? { ...prev, monthly_income_range: e.target.value as '0-1000' | '1001-5000' | '5001-10000' | '10000+' | 'prefer_not_say' } : null)}
                   className="input-enhanced"
                 >
                   <option value="">Select range</option>
@@ -304,7 +304,7 @@ export default function ProfilePageClient() {
                 </label>
                 <select
                   value={profile?.financial_knowledge_level || ''}
-                  onChange={(e) => setProfile(prev => prev ? { ...prev, financial_knowledge_level: e.target.value as any } : null)}
+                  onChange={(e) => setProfile(prev => prev ? { ...prev, financial_knowledge_level: e.target.value as 'beginner' | 'intermediate' | 'advanced' } : null)}
                   className="input-enhanced"
                 >
                   <option value="">Select your level</option>
@@ -349,7 +349,7 @@ export default function ProfilePageClient() {
                 </label>
                 <select
                   value={profile?.preferred_learning_style || ''}
-                  onChange={(e) => setProfile(prev => prev ? { ...prev, preferred_learning_style: e.target.value as any } : null)}
+                  onChange={(e) => setProfile(prev => prev ? { ...prev, preferred_learning_style: e.target.value as 'visual' | 'interactive' | 'reading' | 'video' } : null)}
                   className="input-enhanced"
                 >
                   <option value="">Select your style</option>
