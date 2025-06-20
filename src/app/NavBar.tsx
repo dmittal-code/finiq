@@ -162,7 +162,7 @@ export default function NavBar() {
             {/* Admin Link */}
             {user && isAdmin && (
               <Link
-                href="/admin/terms"
+                href="/admin"
                 className={`px-5 py-3 rounded-lg text-base font-bold transition-all duration-200 ${
                   pathname.startsWith('/admin') 
                     ? "bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-md" 
@@ -322,7 +322,7 @@ export default function NavBar() {
               {isAdmin && (
                 <div className="pt-2 border-t border-gray-100">
                   <Link
-                    href="/admin/terms"
+                    href="/admin"
                     className={`block px-4 py-3 rounded-md text-base font-bold transition-all duration-200 ${
                       pathname.startsWith('/admin') 
                         ? "bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-md" 

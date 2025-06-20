@@ -1,27 +1,20 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getQuizById } from '../../../lib/quizzes';
+import { getQuizByIdentifier } from '../../../lib/quizzes';
 import QuizPageClient from './QuizPageClient';
 
 interface QuizPageProps {
   params: Promise<{
-    id: string;
+    slug: string;
   }>;
 }
 
 // Generate metadata for each quiz page
 export async function generateMetadata({ params }: QuizPageProps): Promise<Metadata> {
-  const { id } = await params;
-  const quizId = parseInt(id);
+  const { slug } = await params;
   
-  if (isNaN(quizId)) {
-    return {
-      title: 'Quiz Not Found - FinIQ',
-    };
-  }
-
   try {
-    const quiz = await getQuizById(quizId);
+    const quiz = await getQuizByIdentifier(slug);
     
     if (!quiz) {
       return {
@@ -46,25 +39,19 @@ export async function generateMetadata({ params }: QuizPageProps): Promise<Metad
 }
 
 export default async function QuizPage({ params }: QuizPageProps) {
-  const { id } = await params;
-  const quizId = parseInt(id);
+  const { slug } = await params;
   
-  // Check if ID is valid
-  if (isNaN(quizId)) {
-    notFound();
-  }
-
-  // Verify quiz exists
+  // Get quiz by identifier (can be slug or numeric ID for backward compatibility)
   try {
-    const quiz = await getQuizById(quizId);
+    const quiz = await getQuizByIdentifier(slug);
     if (!quiz) {
       notFound();
     }
+
+    // Pass the quiz ID to the client component
+    return <QuizPageClient quizId={quiz.id} />;
   } catch {
     console.error('Error loading quiz');
     notFound();
   }
-
-  // Pass the quiz ID to the client component
-  return <QuizPageClient quizId={quizId} />;
 } 
