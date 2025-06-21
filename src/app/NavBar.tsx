@@ -21,6 +21,7 @@ const calculators = [
   { href: "/savings-goal", label: "Savings Goal", icon: "🎯" },
   { href: "/risk-vs-reward", label: "Risk vs Reward", icon: "🎲" },
   { href: "/investments", label: "Investments", icon: "💸" },
+  { href: "/rule-of-72", label: "Rule of 72", icon: "🧮" },
 ];
 
 export default function NavBar() {
